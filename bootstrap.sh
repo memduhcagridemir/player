@@ -17,7 +17,4 @@ apt-get -y upgrade
 # optional
 sudo apt-get install -y build-essential
 
-# install nodejs
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-sudo apt-get install -y nodejs
-sudo npm install -g @angular/cli typescript
+sudo apt-get install -y nginx php mariadb-client mariadb-common mariadb-server php-dom php-common php-xml php-curl php-intl php-mysql

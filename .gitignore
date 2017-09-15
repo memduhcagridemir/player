@@ -1,11 +1,18 @@
-.idea/
-.vagrant/
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-ubuntu-xenial-16.04-cloudimg-console.log
+/.idea/
+/.vagrant/
+/.web-server-pid
 
-backend/node_modules/
-backend/bin/
-backend/*.log
+/bin/
+/ubuntu-xenial-16.04-cloudimg-console.log
+/vendor/
+/web/bundles/
 
-frontend/node_modules/
+/var/
+!var/cache/.gitkeep
+!var/logs/.gitkeep
+!var/sessions/.gitkeep
 
+/app/config/parameters.yml
+/phpunit.xml
