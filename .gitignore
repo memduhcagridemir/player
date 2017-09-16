@@ -14,5 +14,7 @@
 !var/logs/.gitkeep
 !var/sessions/.gitkeep
 
+/web/audio/*
+
 /app/config/parameters.yml
 /phpunit.xml
