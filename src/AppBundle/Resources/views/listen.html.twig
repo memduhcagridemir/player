@@ -1,43 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <div class="section no-pad-bot" id="index-banner">
-        <div class="container">
-            <!-- Top Info -->
-            <div id="title">
-                <span id="track"></span>
-                <div id="timer">0:00</div>
-                <div id="duration">0:00</div>
-            </div>
-
-            <!-- Controls -->
-            <div class="controlsOuter">
-                <div class="controlsInner">
-                    <div id="loading"></div>
-                    <div class="btn" id="playBtn"></div>
-                    <div class="btn" id="pauseBtn"></div>
-                    <div class="btn" id="prevBtn"></div>
-                    <div class="btn" id="nextBtn"></div>
+{% block div_container %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Top Info -->
+                <div id="title">
+                    <span id="track"></span>
+                    <div id="timer">0:00</div>
+                    <div id="duration">0:00</div>
                 </div>
-                <div class="btn" id="playlistBtn"></div>
-                <div class="btn" id="volumeBtn"></div>
-            </div>
 
-            <!-- Progress -->
-            <div id="waveform"></div>
-            <div id="bar"></div>
-            <div id="progress"></div>
+                <!-- Controls -->
+                <div class="controlsOuter">
+                    <div class="controlsInner">
+                        <div id="loading"></div>
+                        <div class="btn" id="prevBtn"><span class="oi oi-media-step-backward"></span></div>
+                        <div class="btn" id="playBtn"><span class="oi oi-media-play"></span></div>
+                        <div class="btn" id="pauseBtn"><span class="oi oi-media-pause"></span></div>
+                        <div class="btn" id="nextBtn"><span class="oi oi-media-step-forward"></span></div>
+                    </div>
+                    <div class="btn" id="playlistBtn"><i class="large material-icons">playlist_play</i></div>
+                    <div class="btn" id="volumeBtn"><i class="large material-icons">volume_up</i></div>
+                </div>
 
-            <!-- Playlist -->
-            <div id="playlist">
-                <div id="list"></div>
-            </div>
+                <!-- Progress -->
+                <div id="waveform"></div>
+                <div id="bar"></div>
+                <div id="progress"></div>
 
-            <!-- Volume -->
-            <div id="volume" class="fadeout">
-                <div id="barFull" class="bar"></div>
-                <div id="barEmpty" class="bar"></div>
-                <div id="sliderBtn"></div>
+                <!-- Playlist -->
+                <div id="playlist">
+                    <div id="list"></div>
+                </div>
+
+                <!-- Volume -->
+                <div id="volume" class="fadeout">
+                    <div id="barFull" class="bar"></div>
+                    <div id="barEmpty" class="bar"></div>
+                    <div id="sliderBtn"></div>
+                </div>
             </div>
         </div>
     </div>
