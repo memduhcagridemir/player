@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demo Application{% endblock %}
+
+{% block div_container %}
+    <br/>
+    <br/>
+    <br/>
+
+    {% trans_default_domain 'FOSUserBundle' %}
+
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-9">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris feugiat rhoncus fermentum. Fusce quis sagittis elit, ac interdum massa. Curabitur id odio hendrerit, mattis sapien vel, bibendum massa. Aenean vel congue erat, in tempus libero. Proin quis malesuada tellus. In a neque iaculis, pellentesque dolor quis, vehicula felis. Quisque elementum condimentum risus nec eleifend. Sed nec odio vitae arcu lacinia aliquet sit amet id neque. Suspendisse potenti. Nullam posuere nulla magna, vitae mattis sapien interdum non. Aliquam suscipit pulvinar suscipit. Nullam at ante eget libero ornare fermentum et vel dui. Vivamus iaculis volutpat imperdiet.
+            </div>
+            <div class="col-3">
+                <form class="form-signin" action="{{ path("fos_user_security_check") }}" method="post">
+                    {% if csrf_token %}
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                    {% endif %}
+
+                    <h2 class="form-signin-heading">Please sign in</h2>
+
+                    <label for="username" class="sr-only">{{ 'security.login.username'|trans }}</label>
+                    <input type="text" class="form-control"  id="username" name="_username" value="{{ last_username }}" required="required" />
+
+                    <label for="password" class="sr-only">{{ 'security.login.password'|trans }}</label>
+                    <input type="password" id="password" name="_password" class="form-control" required="required" />
+
+
+                    <div class="checkbox">
+                        <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                    </div>
+
+                    <input type="submit" class="btn btn-lg btn-primary btn-block" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+                    <a class="btn btn-lg btn-primary btn-block" href="/register">{{ 'security.login.submit'|trans }}</a>
+                </form>
+            </div>
+        </div>
+    </div> <!-- /container -->
+
+{% endblock %}
