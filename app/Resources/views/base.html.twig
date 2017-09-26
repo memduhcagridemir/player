@@ -14,7 +14,7 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top navbar-transparent bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="{{ path('homepage') }}">player</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,12 +22,24 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('listen') }}">Listen</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Login</a>
-                        </li>
+                        {% if app.user %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('listen') }}">Listen</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('fos_user_profile_edit') }}">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('fos_user_security_logout') }}">Logout</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('fos_user_registration_register') }}">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('fos_user_security_login') }}">Login</a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -35,11 +47,16 @@
 
         {% block div_container %}{% endblock %}
 
-        <footer class="footer">
-            <div class="container">
-                <span class="text-muted">Place footer content here.</span>
-            </div>
-        </footer>
+        {% block footer %}
+            <br/>
+            <br/>
+
+            <footer class="footer">
+                <div class="container">
+                    <span class="text-muted">Place footer content here.</span>
+                </div>
+            </footer>
+        {% endblock %}
 
         {% block javascripts %}
             <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

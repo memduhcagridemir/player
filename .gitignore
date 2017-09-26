@@ -2,10 +2,10 @@
 
 /.idea/
 /.vagrant/
-/.web-server-pid
 
-/bin/
+/.web-server-pid
 /ubuntu-xenial-16.04-cloudimg-console.log
+
 /vendor/
 /web/bundles/
 
@@ -15,6 +15,6 @@
 !var/sessions/.gitkeep
 
 /web/audio/*
+!web/audio/.gitkeep
 
 /app/config/parameters.yml
-/phpunit.xml

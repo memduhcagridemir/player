@@ -12,9 +12,9 @@ ln -fs /usr/share/zoneinfo/Europe/Istanbul /etc/localtime
 dpkg-reconfigure -f noninteractive tzdata
 
 apt-get update
-apt-get -y upgrade
+# apt-get -y upgrade
 
 # optional
 sudo apt-get install -y build-essential
 
-sudo apt-get install -y nginx php mariadb-client mariadb-common mariadb-server php-dom php-common php-xml php-curl php-intl php-mysql
+sudo apt-get install -y php php-dom php-common php-xml php-curl php-intl php-mysql mysql-server
