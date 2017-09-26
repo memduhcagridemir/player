@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.name }} | Profile{% endblock %}
+
+{% block div_container %}
+    <br/>
+    <br/>
+    <br/>
+    <div class="container">
+        <div class="row">
+            <div class="card col-md-3">
+                <img class="card-img-top" src="/img/login-icon-3048.png" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">{{ user.name }}</h4>
+                    <p class="card-text">@{{ user.username }}</p>
+                    <p class="card-text">{{ user.email }}</p>
+                </div>
+            </div>
+            <div class="col-md-8 ml-auto">
+                <div class="card-body">
+                    <h4 class="card-title">User Bio</h4>
+                    <p class="card-text">
+                        {{ user.bio }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -13,7 +13,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('AppBundle::index.html.twig');
+        return $this->render('::index.html.twig');
     }
 
     /**
@@ -21,6 +21,6 @@ class DefaultController extends Controller
      */
     public function listenAction(Request $request)
     {
-        return $this->render('AppBundle::listen.html.twig');
+        return $this->render('::listen.html.twig');
     }
 }
