@@ -14,7 +14,7 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top navbar-transparent bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="{{ path('homepage') }}">player</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,10 +22,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('listen') }}">Listen</a>
-                        </li>
                         {% if app.user %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('listen') }}">Listen</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('fos_user_profile_edit') }}">Profile</a>
                             </li>
@@ -48,6 +48,9 @@
         {% block div_container %}{% endblock %}
 
         {% block footer %}
+            <br/>
+            <br/>
+
             <footer class="footer">
                 <div class="container">
                     <span class="text-muted">Place footer content here.</span>

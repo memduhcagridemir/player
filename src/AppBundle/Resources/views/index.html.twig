@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}player | Home{% endblock %}
+
 {% block div_container %}
     <header>
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -65,6 +67,10 @@
             -o-background-size: cover;
             background-size: cover;
         }
+
+         .navbar-transparent {
+             background: rgba(0, 0, 0, 0) !important;
+         }
     </style>
 {% endblock %}
 
