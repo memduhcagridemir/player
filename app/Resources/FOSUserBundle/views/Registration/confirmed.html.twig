@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration Completed{% endblock %}
+
+{% block div_container %}
+    <br/>
+    <br/>
+    <br/>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card-body">
+                    {% trans_default_domain 'FOSUserBundle' %}
+
+                    {% block fos_user_content %}
+                        <p>Registration completed. </p>
+                    {% endblock fos_user_content %}
+                </div>
+            </div>
+            <div class="card col-md-3 ml-auto">
+                <img class="card-img-top" src="/img/login-icon-3048.png" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">Already have an account?</h4>
+                    <p class="card-text">Login to stream your favorite songs for free.</p>
+                    <a href="{{ path('fos_user_security_login') }}" class="btn btn-outline-secondary btn-block">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

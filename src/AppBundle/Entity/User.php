@@ -81,4 +81,20 @@ class User extends BaseUser
     {
         return $this->bio;
     }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        parent::setEmail($email);
+        $this->setName("New User");
+        $this->setBio("Apparently, this user prefers to keep an air of mystery about them.");
+
+        return $this;
+    }
 }
