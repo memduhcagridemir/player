@@ -4,13 +4,17 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 /**
  * @ORM\Entity
- * @ORM\Table(name="`file`", indexes={
+ * @Vich\Uploadable
+ * @ORM\Table(name="`audio`", indexes={
  *   @ORM\Index(name="hash_idx", columns={"hash"})
  * })
  */
-class File
+class Audio
 {
     /**
      * @ORM\Id
@@ -25,9 +29,14 @@ class File
     protected $hash;
 
     /**
-     * @ORM\Column(name="`name`", type="string", length=64, nullable=false)
+     * @ORM\Column(name="`name`", type="string", length=128, nullable=false)
      */
     protected $name;
+
+    /**
+     * @ORM\Column(name="`original_name`", type="string", length=128, nullable=false)
+     */
+    protected $originalName;
 
     /**
      * @ORM\Column(name="`length`", type="smallint", nullable=false, options={"unsigned": true})
@@ -35,16 +44,30 @@ class File
     protected $length;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Folder", inversedBy="files")
-     * @ORM\JoinColumn(name="folder_id", referencedColumnName="id")
-     */
-    protected $folder;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="files")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="audioFiles")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
+
+    /**
+     * @Vich\UploadableField(mapping="audio_file", fileNameProperty="name", size="size", mimeType="mimeType", originalName="originalName")
+     * @var File
+     */
+    protected $audioFile;
+
+    /**
+     * Set audioFile
+     *
+     * @param File $audioFile
+     *
+     * @return Audio
+     */
+    public function setImageFile(File $audioFile = null)
+    {
+        $this->audioFile = $audioFile;
+
+        $this->hash = new \DateTime('now');
+    }
 
     /**
      * Get id
@@ -61,7 +84,7 @@ class File
      *
      * @param string $hash
      *
-     * @return File
+     * @return Audio
      */
     public function setHash($hash)
     {
@@ -85,7 +108,7 @@ class File
      *
      * @param string $name
      *
-     * @return File
+     * @return Audio
      */
     public function setName($name)
     {
@@ -105,11 +128,35 @@ class File
     }
 
     /**
+     * Set originalName
+     *
+     * @param string $originalName
+     *
+     * @return Audio
+     */
+    public function setOriginalName($originalName)
+    {
+        $this->originalName = $originalName;
+
+        return $this;
+    }
+
+    /**
+     * Get originalName
+     *
+     * @return string
+     */
+    public function getOriginalName()
+    {
+        return $this->originalName;
+    }
+
+    /**
      * Set length
      *
      * @param integer $length
      *
-     * @return File
+     * @return Audio
      */
     public function setLength($length)
     {
@@ -133,7 +180,7 @@ class File
      *
      * @param \AppBundle\Entity\User $user
      *
-     * @return File
+     * @return Audio
      */
     public function setUser(\AppBundle\Entity\User $user = null)
     {
@@ -153,26 +200,26 @@ class File
     }
 
     /**
-     * Set folder
+     * Set audioFile
      *
-     * @param \AppBundle\Entity\Folder $folder
+     * @param File $audioFile
      *
-     * @return File
+     * @return Audio
      */
-    public function setFolder(\AppBundle\Entity\Folder $folder = null)
+    public function setAudioFile(File $audioFile = null)
     {
-        $this->folder = $folder;
+        $this->audioFile = $audioFile;
 
         return $this;
     }
 
     /**
-     * Get folder
+     * Get audioFile
      *
-     * @return \AppBundle\Entity\Folder
+     * @return File
      */
-    public function getFolder()
+    public function getAudioFile()
     {
-        return $this->folder;
+        return $this->audioFile;
     }
 }

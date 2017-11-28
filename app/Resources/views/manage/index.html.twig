@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}player | Manage{% endblock %}
+
+{% block div_container %}
+    <br/>
+    <br/>
+    <br/>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">List group item heading</h5>
+                            <small>3 days ago</small>
+                        </div>
+                        <small>Donec id elit non mi porta.</small>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">List group item heading</h5>
+                            <small class="text-muted">3 days ago</small>
+                        </div>
+                        <small class="text-muted">Donec id elit non mi porta.</small>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">List group item heading</h5>
+                            <small class="text-muted">3 days ago</small>
+                        </div>
+                        <small class="text-muted">Donec id elit non mi porta.</small>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr class="d-flex">
+                            <th class="col-1">#</th>
+                            <th class="col-8">File Name</th>
+                            <th class="col-2">Length</th>
+                            <th class="col-1">Play</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="d-flex">
+                            <td class="col-1">1</td>
+                            <td class="col-8">Otto</td>
+                            <td class="col-2">@mdo</td>
+                            <td class="col-1"><span class="oi oi-media-play"></span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

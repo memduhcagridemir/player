@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listen | player{% endblock %}
+
+{% block div_container %}
+    <br/>
+    <br/>
+    <br/>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input type="submit"/>
+    {{ form_end(form) }}
+
+    <br/>
+    <br/>
+    <br/>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            </div>
+        </div>
+    </div>
+{% endblock %}
