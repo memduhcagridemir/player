@@ -7,18 +7,23 @@
     <br/>
     <br/>
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <input type="submit"/>
-    {{ form_end(form) }}
-
-    <br/>
-    <br/>
-    <br/>
-
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                {{ form_start(form) }}
+                <div class="row">
+                    <div class="col">
+                        {{ form_label(form.name) }}
+                        {{ form_widget(form.name) }}
+                        {{ form_errors(form.name) }}
+                    </div>
+                    <div class="col">
+                        {{ form_widget(form.audioFile) }}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Upload</button>
+
+                {{ form_end(form) }}
             </div>
         </div>
     </div>

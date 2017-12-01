@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7d3e5247db46eaba815fd4a8db14b22d",
-    "content-hash": "48a5c45e706c0012e9a512a257b4901e",
+    "hash": "014205dc9b3776db8a7c7410b70c454f",
+    "content-hash": "0618b9ad5fa5b2b3d4c4f9a4773fadc1",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1011,6 +1011,84 @@
             "time": "2017-05-31 11:50:14"
         },
         {
+            "name": "gedmo/doctrine-extensions",
+            "version": "v2.4.31",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
+                "reference": "79cd1d49898a21ede9a5dfad41c021abd9a14339"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/79cd1d49898a21ede9a5dfad41c021abd9a14339",
+                "reference": "79cd1d49898a21ede9a5dfad41c021abd9a14339",
+                "shasum": ""
+            },
+            "require": {
+                "behat/transliterator": "~1.2",
+                "doctrine/common": "~2.4",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "doctrine/common": ">=2.5.0",
+                "doctrine/mongodb-odm": ">=1.0.2",
+                "doctrine/orm": ">=2.5.0",
+                "phpunit/phpunit": "*",
+                "symfony/yaml": "~2.6|~3.0"
+            },
+            "suggest": {
+                "doctrine/mongodb-odm": "to use the extensions with the MongoDB ODM",
+                "doctrine/orm": "to use the extensions with the ORM"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Gedmo\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Buchmann",
+                    "email": "david@liip.ch"
+                },
+                {
+                    "name": "Gediminas Morkevicius",
+                    "email": "gediminas.morkevicius@gmail.com"
+                },
+                {
+                    "name": "Gustavo Falco",
+                    "email": "comfortablynumb84@gmail.com"
+                }
+            ],
+            "description": "Doctrine2 behavioral extensions",
+            "homepage": "http://gediminasm.org/",
+            "keywords": [
+                "Blameable",
+                "behaviors",
+                "doctrine2",
+                "extensions",
+                "gedmo",
+                "loggable",
+                "nestedset",
+                "sluggable",
+                "sortable",
+                "timestampable",
+                "translatable",
+                "tree",
+                "uploadable"
+            ],
+            "time": "2017-10-12 06:26:21"
+        },
+        {
             "name": "incenteev/composer-parameter-handler",
             "version": "v2.1.2",
             "source": {
@@ -1239,6 +1317,53 @@
                 "psr-3"
             ],
             "time": "2017-06-19 01:22:40"
+        },
+        {
+            "name": "nass600/get-id3",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nass600/getID3.git",
+                "reference": "d3e82b04acad494e9cc3e1b73ec67748690d5474"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nass600/getID3/zipball/d3e82b04acad494e9cc3e1b73ec67748690d5474",
+                "reference": "d3e82b04acad494e9cc3e1b73ec67748690d5474",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "php-library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "getid3/getid3.php",
+                    "getid3/write.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GNU"
+            ],
+            "authors": [
+                {
+                    "name": "James Heinrich"
+                }
+            ],
+            "description": "PHP library for handling audio/video files metadata",
+            "homepage": "https://github.com/nass600/getID3",
+            "keywords": [
+                "id3",
+                "metadata",
+                "mp3"
+            ],
+            "time": "2015-12-10 22:41:46"
         },
         {
             "name": "paragonie/random_compat",

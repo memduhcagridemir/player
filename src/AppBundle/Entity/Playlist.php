@@ -6,9 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="`playlist`", indexes={
- *   @ORM\Index(name="hash_idx", columns={"hash"})
- * })
+ * @ORM\Table(name="`playlist`")
  */
 class AudioFile
 {

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Vich\UploaderBundle\Entity\File;
+use getID3;
 
 /**
  * @Route("/manage")
@@ -37,11 +38,16 @@ class ManageController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $file stores the uploaded PDF file
-            /** @var \Symfony\Component\HttpFoundation\File\File $file */
-            $file = $audio->getAudioFile();
+            $getID3 = new getID3();
+            $em = $this->getDoctrine()->getManager();
 
-            echo '<br/><br/><br/><br/><br/>' . $file->getFilename();
+            $audio->setHash(hash_file('sha1', $audio->getAudioFile()));
+
+            $audioInfo = $getID3->analyze($audio->getAudioFile());
+            $audio->setLength((int) $audioInfo['playtime_seconds']);
+
+            $em->persist($audio);
+            $em->flush();
         }
 
         return $this->render(':manage:upload.html.twig', array(

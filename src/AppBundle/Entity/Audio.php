@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+use Gedmo\Mapping\Annotation as Gedmo;
+
 /**
  * @ORM\Entity
  * @Vich\Uploadable
@@ -24,22 +26,17 @@ class Audio
     protected $id;
 
     /**
-     * @ORM\Column(name="`hash`", type="string", length=40, nullable=false)
+     * @ORM\Column(name="`hash`", type="string", length=40, options={"default": "abc"})
      */
     protected $hash;
 
     /**
-     * @ORM\Column(name="`name`", type="string", length=128, nullable=false)
+     * @ORM\Column(name="`name`", type="string", length=128)
      */
     protected $name;
 
     /**
-     * @ORM\Column(name="`original_name`", type="string", length=128, nullable=false)
-     */
-    protected $originalName;
-
-    /**
-     * @ORM\Column(name="`length`", type="smallint", nullable=false, options={"unsigned": true})
+     * @ORM\Column(name="`length`", type="smallint", options={"default": 123, "unsigned": true})
      */
     protected $length;
 
@@ -50,10 +47,47 @@ class Audio
     protected $user;
 
     /**
+     * @ORM\Column(name="`size`", type="integer")
+     */
+    protected $size;
+
+    /**
+     * @ORM\Column(name="`mime_type`", type="string", length=64)
+     */
+    protected $mimeType;
+
+    /**
+     * @ORM\Column(name="`original_name`", type="string", length=128, nullable=false)
+     */
+    protected $originalName;
+
+    /**
      * @Vich\UploadableField(mapping="audio_file", fileNameProperty="name", size="size", mimeType="mimeType", originalName="originalName")
      * @var File
      */
     protected $audioFile;
+
+    /**
+     * @var \DateTime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="`created_at`", type="datetime")
+     */
+    protected $createdAt;
+
+    /**
+     * @var \DateTime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="`updated_at`", type="datetime")
+     */
+    protected $updatedAt;
+
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+    }
 
     /**
      * Set audioFile
@@ -221,5 +255,101 @@ class Audio
     public function getAudioFile()
     {
         return $this->audioFile;
+    }
+
+    /**
+     * Set size
+     *
+     * @param integer $size
+     *
+     * @return Audio
+     */
+    public function setSize($size)
+    {
+        $this->size = $size;
+
+        return $this;
+    }
+
+    /**
+     * Get size
+     *
+     * @return integer
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    /**
+     * Set mimeType
+     *
+     * @param string $mimeType
+     *
+     * @return Audio
+     */
+    public function setMimeType($mimeType)
+    {
+        $this->mimeType = $mimeType;
+
+        return $this;
+    }
+
+    /**
+     * Get mimeType
+     *
+     * @return string
+     */
+    public function getMimeType()
+    {
+        return $this->mimeType;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Audio
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Audio
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }

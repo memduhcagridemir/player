@@ -80,5 +80,6 @@ vich_uploader:
     db_driver: orm
     mappings:
         audio_file:
+            namer:              vich_uploader.namer_uniqid
             uri_prefix:         '/uploads/audiofiles'
             upload_destination: '%kernel.root_dir%/../uploads/audiofiles'
