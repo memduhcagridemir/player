@@ -20,9 +20,14 @@ class ManageController extends Controller
     /**
      * @Route("/", name="manage_index", defaults={"folder" = "4"})
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return $this->render(':manage:upload.html.twig');
+        $em = $this->getDoctrine()->getManager();
+
+        /** $playlists =  */
+        $playlists = $em->getRepository('AppBundle:Playlist')->findBy(['user' => $this->getUser()->getId()]);
+
+        return $this->render(':manage:index.html.twig', ['playlists' => $playlists]);
     }
 
     /**

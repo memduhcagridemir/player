@@ -2,8 +2,9 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\Playlist;
 use AppBundle\Entity\User;
-use AppBundle\Entity\AudioFile;
+use AppBundle\Entity\Audio;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -19,16 +20,27 @@ class Fixtures extends Fixture
             $user->setName('name_' . $i);
             $user->setEmail('email@gmail.com' . $i);
             $user->setEnabled(true);
-            $manager->persist($user);
 
             for ($h = 0; $h < 3; $h++) {
-                $file = new AudioFile();
-                $file->setName('song' . $h);
-                $file->setHash('123_' . $h);
-                $file->setLength(22);
-                $file->setUser($user);
-                $manager->persist($file);
+                $playlist = new Playlist();
+                $playlist->setUser($user);
+                $playlist->setName('platlist_' . $h);
+
+                for ($c = 0; $c < 3; $c++) {
+                    $file = new Audio();
+                    $file->setName('song' . $c);
+                    $file->setHash('123_' . $c);
+                    $file->setLength(22);
+                    $file->setUser($user);
+                    $file->setSize(123);
+                    $file->setMimeType('aws');
+                    $file->setOriginalName('qwe');
+                    $manager->persist($file);
+                }
+
+                $manager->persist($playlist);
             }
+            $manager->persist($user);
         }
 
         $manager->flush();
