@@ -24,9 +24,22 @@ class Playlist
     protected $user;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Audio", inversedBy="playlists")
+     */
+    protected $audios;
+
+    /**
      * @ORM\Column(name="`name`", type="string", length=256, nullable=false)
      */
     protected $name;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->audios = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -60,6 +73,40 @@ class Playlist
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Add audio
+     *
+     * @param \AppBundle\Entity\Audio $audio
+     *
+     * @return Playlist
+     */
+    public function addAudio(\AppBundle\Entity\Audio $audio)
+    {
+        $this->audios[] = $audio;
+
+        return $this;
+    }
+
+    /**
+     * Remove audio
+     *
+     * @param \AppBundle\Entity\Audio $audio
+     */
+    public function removeAudio(\AppBundle\Entity\Audio $audio)
+    {
+        $this->audios->removeElement($audio);
+    }
+
+    /**
+     * Get audios
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAudios()
+    {
+        return $this->audios;
     }
 
     /**

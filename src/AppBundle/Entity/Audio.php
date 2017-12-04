@@ -41,7 +41,7 @@ class Audio
     protected $length;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="audioFiles")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="audios")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
