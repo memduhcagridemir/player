@@ -37,6 +37,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        project_name: '%project_name%'
 
 # Doctrine Configuration
 doctrine:
@@ -75,3 +77,11 @@ fos_user:
     from_email:
         address: "%mailer_user%"
         sender_name: "%mailer_user%"
+
+vich_uploader:
+    db_driver: orm
+    mappings:
+        audio_file:
+            namer:              vich_uploader.namer_uniqid
+            uri_prefix:         '/uploads/audiofiles'
+            upload_destination: '%kernel.root_dir%/../uploads/audiofiles'

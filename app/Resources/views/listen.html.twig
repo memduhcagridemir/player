@@ -9,52 +9,53 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">List group item heading</h5>
-                            <small>3 days ago</small>
-                        </div>
-                        <small>Donec id elit non mi porta.</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">List group item heading</h5>
-                            <small class="text-muted">3 days ago</small>
-                        </div>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">List group item heading</h5>
-                            <small class="text-muted">3 days ago</small>
-                        </div>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                    </a>
+                <div class="list-group" id="playlists" role="tablist">
+                    {% for playlist in playlists %}
+                        <a class="list-group-item list-group-item-action" id="{{ playlist.id }}-list" data-toggle="list" href="#list-{{ playlist.id }}" role="tab" aria-controls="home">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ playlist.name }}</h5>
+                                <small>3 days ago</small>
+                            </div>
+                            <small>Donec id elit non mi porta.</small>
+                        </a>
+                    {% endfor %}
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="row">
-                    <table class="table table-hover">
-                        <thead>
-                        <tr class="d-flex">
-                            <th class="col-1">#</th>
-                            <th class="col-8">File Name</th>
-                            <th class="col-2">Length</th>
-                            <th class="col-1">Play</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="d-flex">
-                            <td class="col-1">1</td>
-                            <td class="col-8">Otto</td>
-                            <td class="col-2">@mdo</td>
-                            <td class="col-1"><span class="oi oi-media-play"></span></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div class="tab-content" id="nav-tabContent">
+                    {% for playlist in playlists %}
+                        <div class="tab-pane fade" id="list-{{ playlist.id }}" role="tabpanel" aria-labelledby="list-{{ playlist.id }}">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr class="d-flex">
+                                    <th class="col-1">#</th>
+                                    <th class="col-8">File Name</th>
+                                    <th class="col-2">Length</th>
+                                    <th class="col-1">Play</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for audio in playlist.audios %}
+                                    <tr class="d-flex">
+                                        <td class="col-1">{{ loop.index }}</td>
+                                        <td class="col-8">{{ audio.name }}</td>
+                                        <td class="col-2">{{ audio.length }}</td>
+                                        <td class="col-1"><span class="oi oi-media-play"></span></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
+
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $('div#playlists a:first').addClass('active');
+                    $('div#nav-tabContent div:first').addClass('show').addClass('active');
+                });
+            </script>
         </div>
     </div>
 {% endblock %}

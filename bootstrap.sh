@@ -15,6 +15,4 @@ apt-get update
 # apt-get -y upgrade
 
 # optional
-sudo apt-get install -y build-essential
-
-sudo apt-get install -y php php-dom php-common php-xml php-curl php-intl php-mysql mysql-server
+apt-get install -y build-essential php php-dom php-common php-xml php-curl php-intl php-mysql mysql-server
