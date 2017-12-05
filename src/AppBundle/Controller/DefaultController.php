@@ -21,6 +21,14 @@ class DefaultController extends Controller
      */
     public function listenAction(Request $request)
     {
-        return $this->render('::listen.html.twig');
+        $em = $this->getDoctrine()->getManager();
+
+        $playlists = $em->getRepository('AppBundle:Playlist')->findBy([
+            'user' => $this->getUser()
+        ]);
+
+        return $this->render('::listen.html.twig', [
+            'playlists' => $playlists
+        ]);
     }
 }

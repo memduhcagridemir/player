@@ -47,6 +47,11 @@ class Audio
     protected $user;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Playlist", mappedBy="audios")
+     */
+    protected $playlists;
+
+    /**
      * @ORM\Column(name="`size`", type="integer")
      */
     protected $size;
@@ -351,5 +356,39 @@ class Audio
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Add playlist
+     *
+     * @param \AppBundle\Entity\Playlist $playlist
+     *
+     * @return Audio
+     */
+    public function addPlaylist(\AppBundle\Entity\Playlist $playlist)
+    {
+        $this->playlists[] = $playlist;
+
+        return $this;
+    }
+
+    /**
+     * Remove playlist
+     *
+     * @param \AppBundle\Entity\Playlist $playlist
+     */
+    public function removePlaylist(\AppBundle\Entity\Playlist $playlist)
+    {
+        $this->playlists->removeElement($playlist);
+    }
+
+    /**
+     * Get playlists
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlaylists()
+    {
+        return $this->playlists;
     }
 }
