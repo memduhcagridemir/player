@@ -95,9 +95,23 @@ class User extends BaseUser
      */
     public function setEmail($email)
     {
+        $this->setUsername($email);
         parent::setEmail($email);
-        $this->setName("New User");
-        $this->setBio("Apparently, this user prefers to keep an air of mystery about them.");
+
+        return $this;
+    }
+
+    /**
+     * Set email canonical.
+     *
+     * @param string $emailCanonical
+     *
+     * @return User
+     */
+    public function setEmailCanonical($emailCanonical)
+    {
+        $this->setUsernameCanonical($emailCanonical);
+        parent::setEmailCanonical($emailCanonical);
 
         return $this;
     }

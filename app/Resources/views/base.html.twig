@@ -62,14 +62,23 @@
         {% block div_container %}{% endblock %}
 
         {% block footer %}
-            <br/>
-            <br/>
-
-            <footer class="footer">
+            <footer class="footer fixed-bottom">
+                <hr>
                 <div class="container">
-                    <span class="text-muted">Place footer content here.</span>
+                    <span class="text-muted"><p>Place footer content here.</p></span>
                 </div>
             </footer>
         {% endblock %}
     </body>
+
+    <style>
+        body {
+            background-image: url(/img/dust_scratches.png);
+            background-attachment: fixed;
+        }
+
+        body > div.container {
+            min-height: 80vh;
+        }
+    </style>
 </html>

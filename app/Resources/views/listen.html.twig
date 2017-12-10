@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Listen | player{% endblock %}
+{% block title %}Listen | {{ project_name }}{% endblock %}
 
 {% block div_container %}
     <br/>
@@ -16,7 +16,7 @@
                                 <h5 class="mb-1">{{ playlist.name }}</h5>
                                 <small>3 days ago</small>
                             </div>
-                            <small>Donec id elit non mi porta.</small>
+                            <small>This is a playlist.</small>
                         </a>
                     {% endfor %}
                 </div>
@@ -29,18 +29,18 @@
                                 <thead>
                                 <tr class="d-flex">
                                     <th class="col-1">#</th>
+                                    <th class="col-1">Play</th>
                                     <th class="col-8">File Name</th>
                                     <th class="col-2">Length</th>
-                                    <th class="col-1">Play</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% for audio in playlist.audios %}
                                     <tr class="d-flex">
                                         <td class="col-1">{{ loop.index }}</td>
-                                        <td class="col-8">{{ audio.name }}</td>
-                                        <td class="col-2">{{ audio.length }}</td>
                                         <td class="col-1"><span class="oi oi-media-play"></span></td>
+                                        <td class="col-8"><span class="audio-item" data-toggle="tooltip" data-placement="top" data-file="{{ audio.name }}" title="{{ audio.originalName }}">{{ audio.originalName }}</span></td>
+                                        <td class="col-2">{{ audio.length | sectotime}}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -54,6 +54,11 @@
                 $(document).ready(function(){
                     $('div#playlists a:first').addClass('active');
                     $('div#nav-tabContent div:first').addClass('show').addClass('active');
+
+                    updatePlaylist();
+                    $('a.list-group-item').each(function(key, value){
+                        $(value).on('click', updatePlaylist);
+                    }); // this is buggy
                 });
             </script>
         </div>
@@ -61,49 +66,42 @@
 {% endblock %}
 
 {% block footer %}
-    <footer class="footer">
+    <footer class="fixed-bottom">
+        <hr>
         <div class="container">
             <div class="row">
-                <div class="col-12">
-                    <div class="progress" id="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 100%; height: 2px;"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                    <div id="title">
-                        <p>
-                            <span id="track"></span>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-4 text-center">
+                <div class="col-2">
                     <div class="controlsOuter">
                         <div class="controlsInner">
-                            <div class="btn" id="repeatBtn"><span class="oi oi-reload"></span></div>
-                            <div class="btn" id="prevBtn"><span class="oi oi-media-step-backward"></span></div>
-                            <div class="btn" id="playBtn"><span class="oi oi-media-play"></span></div>
-                            <div class="btn" id="pauseBtn" style="display: none;"><span class="oi oi-media-pause"></span></div>
-                            <div class="btn" id="nextBtn"><span class="oi oi-media-step-forward"></span></div>
-                            <div class="btn" id="shuffleBtn"><span class="oi oi-random"></span></div>
+                            <span id="prevBtn"    class="spaced oi oi-media-step-backward"></span>
+                            <span id="playBtn"    class="spaced oi oi-media-play"></span>
+                            <span id="pauseBtn"   class="spaced oi oi-media-pause" style="display: none;"></span>
+                            <span id="nextBtn"    class="spaced oi oi-media-step-forward"></span>
+                            <span id="repeatBtn"  class="spaced oi oi-reload"></span>
+                            <span id="shuffleBtn" class="spaced oi oi-random"></span>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="btn"><span class="oi oi-volume-high"></span></div>
-                            <div class="btn" id="volumeSlider" data-slider-id="volumeSlider" data-slider-min="0"
-                                 data-slider-max="100" data-slider-step="1" data-slider-value="25"></div>
-                        </div>
-                        <div class="col-4 text-right">
-                            <span id="timer">0:00</span> | <span id="duration">0:00</span>
-                        </div>
+                <div class="col-1">
+                    <span class="oi oi-volume-high"></span>
+                    <span id="volumeSlider" data-slider-id="volumeSlider" data-slider-min="0"
+                          data-slider-max="100" data-slider-step="5" data-slider-value="100"></span>
+                </div>
+                <div class="col-5">
+                    <div id="title">
+                        <span id="track"></span>
                     </div>
+                </div>
+                <div class="col-4 text-right">
+                    <span id="timer">0:00 </span>
+                    <div class="progress progressBar" id="progressBar">
+                        <div class="progress-bar bg-dark" id="progress" role="progressbar"></div>
+                    </div>
+                    <span id="duration"> 0:00</span>
                 </div>
             </div>
         </div>
+        <br/>
     </footer>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css" integrity="sha256-pO9/5PQba+AqEbehe+LDIXgbKSXTlmwgoeayBfGRwjw=" crossorigin="anonymous" />
@@ -117,15 +115,6 @@
             /* Margin bottom by footer height */
             margin-bottom: 76px;
         }
-        .footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 76px;
-            line-height: 60px; /* Vertically center the text there */
-            background-color: #f5f5f5;
-        }
-
 
         .slider-horizontal {
             width: 50% !important;
@@ -148,6 +137,16 @@
             margin-left: 0px !important;
         }
 
+        span.spaced {
+            margin: 0 6px 0 6px;
+        }
+
+        div.progressBar {
+            display: inline-block;
+            width: 75%;
+            height: 2px;
+            margin-bottom: 0.25rem;
+        }
     </style>
 {% endblock %}
 
@@ -155,217 +154,60 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.4/howler.core.min.js" integrity="sha256-X01rV9/R1vbHm3CxMRt6AFMe0Ea9wnpAGsurU3QkZU4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js" integrity="sha256-NiU5YXcnxmS7LbwmzIDncQxjSF32v/p1TtCB76q9X/4=" crossorigin="anonymous"></script>
 
+    <script src="/js/player.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            var elms = ['track', 'timer', 'duration', 'playBtn', 'pauseBtn', 'prevBtn', 'nextBtn', 'progress',
-                'list'];
-            elms.forEach(function(elm) {
-                window[elm] = document.getElementById(elm);
+            document.getElementById('progressBar').addEventListener('click', function (e) {
+                var coordinates = this.getBoundingClientRect();
+                var x = e.pageX - coordinates.x;
+
+                var clickedValue = x * 100.0 / coordinates.width;
+                console.log(clickedValue);
             });
-
-            var Player = function(playlist) {
-                this.index = 0;
-                this.playlist = playlist;
-
-                track.innerHTML = "1. " + playlist[0].title;
-            };
-
-            Player.prototype = {
-                /**
-                 * Play a song in the playlist.
-                 * @param  {Number} index Index of the song in the playlist (leave empty to play the first or current).
-                 */
-                play: function(index) {
-                    var self = this;
-                    var sound;
-
-                    index = typeof index === 'number' ? index : self.index;
-                    var data = self.playlist[index];
-
-                    if (data.howl) {
-                        sound = data.howl;
-                    } else {
-                        sound = data.howl = new Howl({
-                            src: [data.file],
-                            html5: true,
-                            onplay: function() {
-                                duration.innerHTML = self.formatTime(Math.round(sound.duration()));
-                                requestAnimationFrame(self.step.bind(self));
-                            },
-                            onend: function() {
-                                self.skip('right');
-                            }
-                        });
-                    }
-
-                    sound.play();
-                    track.innerHTML = (this.index + 1) + ". " + data.title;
-                    self.index = index;
-
-                    playBtn.style.display = 'none';
-                    pauseBtn.style.display = 'inline-block';
-                },
-
-                /**
-                 * Pause the currently playing track.
-                 */
-                pause: function() {
-                    var self = this;
-
-                    var sound = self.playlist[self.index].howl;
-                    sound.pause();
-
-                    playBtn.style.display = 'inline-block';
-                    pauseBtn.style.display = 'none';
-                },
-
-                /**
-                 * Skip to the next or previous track.
-                 * @param  {String} direction 'next' or 'prev'.
-                 */
-                skip: function(direction) {
-                    var self = this;
-
-                    var index = 0;
-                    if (direction === 'prev') {
-                        index = self.index - 1;
-                        if (index < 0) {
-                            index = self.playlist.length - 1;
-                        }
-                    } else {
-                        index = self.index + 1;
-                        if (index >= self.playlist.length) {
-                            index = 0;
-                        }
-                    }
-
-                    self.skipTo(index);
-                },
-
-                /**
-                 * Skip to a specific track based on its playlist index.
-                 * @param  {Number} index Index in the playlist.
-                 */
-                skipTo: function(index) {
-                    var self = this;
-
-                    // Stop the current track.
-                    if (self.playlist[self.index].howl) {
-                        self.playlist[self.index].howl.stop();
-                    }
-
-                    // Reset progress.
-                    progress.style.width = '0%';
-
-                    // Play the new track.
-                    self.play(index);
-                },
-
-                /**
-                 * Set the volume and update the volume slider display.
-                 * @param  {Number} val Volume between 0 and 1.
-                 */
-                volume: function(val) {
-                    var self = this;
-
-                    // Update the global volume (affecting all Howls).
-                    Howler.volume(val);
-                },
-
-                /**
-                 * Seek to a new position in the currently playing track.
-                 * @param  {Number} per Percentage through the song to skip.
-                 */
-                seek: function(per) {
-                    var self = this;
-
-                    // Get the Howl we want to manipulate.
-                    var sound = self.playlist[self.index].howl;
-
-                    // Convert the percent into a seek position.
-                    if (sound.playing()) {
-                        sound.seek(sound.duration() * per);
-                    }
-                },
-
-                /**
-                 * The step called within requestAnimationFrame to update the playback position.
-                 */
-                step: function() {
-                    var self = this;
-
-                    // Get the Howl we want to manipulate.
-                    var sound = self.playlist[self.index].howl;
-
-                    // Determine our current seek position.
-                    var seek = sound.seek() || 0;
-                    timer.innerHTML = self.formatTime(Math.round(seek));
-                    progress.style.width = (((seek / sound.duration()) * 100) || 0) + '%';
-
-                    // If the sound is still playing, continue stepping.
-                    if (sound.playing()) {
-                        requestAnimationFrame(self.step.bind(self));
-                    }
-                },
-
-                /**
-                 * Format the time from seconds to M:SS.
-                 * @param  {Number} secs Seconds to format.
-                 * @return {String}      Formatted time.
-                 */
-                formatTime: function(secs) {
-                    var minutes = Math.floor(secs / 60) || 0;
-                    var seconds = (secs - minutes * 60) || 0;
-
-                    return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+        });
+    </script>
+    <script type="text/javascript">
+        function updatePlaylist() {
+            var playlist = [];
+            $('span.audio-item').each(function(key, audio){
+                var audioObj = $(audio);
+                if(audioObj.is(":visible")) {
+                    playlist.push({
+                        title: audioObj.attr('title'),
+                        file:  '/audio/' + audioObj.attr('data-file'),
+                        howl: null
+                    });
                 }
-            };
+            });
+            window.player = new Player(playlist);
+        }
 
-            var player = new Player([
-                {
-                    title: 'Oh Camper',
-                    file: '/audio/camper.mp3',
-                    howl: null
-                },
-                {
-                    title: 'Rave Digger',
-                    file: 'rave_digger',
-                    howl: null
-                },
-                {
-                    title: '80s Vibe',
-                    file: '80s_vibe',
-                    howl: null
-                },
-                {
-                    title: 'Running Out',
-                    file: 'running_out',
-                    howl: null
-                }
-            ]);
-
-            playBtn.addEventListener('click', function() {
-                player.play();
-            });
-            pauseBtn.addEventListener('click', function() {
-                player.pause();
-            });
-            prevBtn.addEventListener('click', function() {
-                player.skip('prev');
-            });
-            nextBtn.addEventListener('click', function() {
-                player.skip('next');
+        $(document).ready(function(){
+            $('span#prevBtn').click(function(){
+                window.player.skip('prev');
             });
 
-            $('#volumeSlider').slider({
+            $('span#playBtn').click(function(){
+                window.player.play();
+            });
+
+            $('span#pauseBtn').click(function(){
+                window.player.pause();
+            });
+
+            $('span#nextBtn').click(function(){
+                window.player.skip('next');
+            });
+
+            var volumeSlider = $('span#volumeSlider');
+            volumeSlider.slider({
                 max: 100,
-                value: 50,
-                tooltip: 'hide',
+                value: 100,
+                tooltip: 'show',
                 handle: 'square'
             });
-
-            $('#volumeSlider').on('change', function(event){
-                player.volume(event.value.newValue / 100);
+            volumeSlider.on('change', function(event){
+                window.player.volume(event.value.newValue / 100);
             })
         });
     </script>
