@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Listen | player{% endblock %}
+{% block title %}Listen | {{ project_name }}{% endblock %}
 
 {% block div_container %}
     <br/>
@@ -61,49 +61,42 @@
 {% endblock %}
 
 {% block footer %}
-    <footer class="footer">
+    <footer class="fixed-bottom">
+        <hr>
         <div class="container">
             <div class="row">
-                <div class="col-12">
-                    <div class="progress" id="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 100%; height: 2px;"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                    <div id="title">
-                        <p>
-                            <span id="track"></span>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-4 text-center">
+                <div class="col-2">
                     <div class="controlsOuter">
                         <div class="controlsInner">
-                            <div class="btn" id="repeatBtn"><span class="oi oi-reload"></span></div>
-                            <div class="btn" id="prevBtn"><span class="oi oi-media-step-backward"></span></div>
-                            <div class="btn" id="playBtn"><span class="oi oi-media-play"></span></div>
-                            <div class="btn" id="pauseBtn" style="display: none;"><span class="oi oi-media-pause"></span></div>
-                            <div class="btn" id="nextBtn"><span class="oi oi-media-step-forward"></span></div>
-                            <div class="btn" id="shuffleBtn"><span class="oi oi-random"></span></div>
+                            <span id="prevBtn"    class="spaced oi oi-media-step-backward"></span>
+                            <span id="playBtn"    class="spaced oi oi-media-play"></span>
+                            <span id="pauseBtn"   class="spaced oi oi-media-pause" style="display: none;"></span>
+                            <span id="nextBtn"    class="spaced oi oi-media-step-forward"></span>
+                            <span id="repeatBtn"  class="spaced oi oi-reload"></span>
+                            <span id="shuffleBtn" class="spaced oi oi-random"></span>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="btn"><span class="oi oi-volume-high"></span></div>
-                            <div class="btn" id="volumeSlider" data-slider-id="volumeSlider" data-slider-min="0"
-                                 data-slider-max="100" data-slider-step="1" data-slider-value="25"></div>
-                        </div>
-                        <div class="col-4 text-right">
-                            <span id="timer">0:00</span> | <span id="duration">0:00</span>
-                        </div>
+                <div class="col-1">
+                    <span class="oi oi-volume-high"></span>
+                    <span id="volumeSlider" data-slider-id="volumeSlider" data-slider-min="0"
+                          data-slider-max="100" data-slider-step="5" data-slider-value="100"></span>
+                </div>
+                <div class="col-5">
+                    <div id="title">
+                        <span id="track"></span>
                     </div>
+                </div>
+                <div class="col-4 text-right">
+                    <span id="timer">0:00 </span>
+                    <div class="progress progressBar" id="progressBar">
+                        <div class="progress-bar bg-dark" id="progress" role="progressbar"></div>
+                    </div>
+                    <span id="duration"> 0:00</span>
                 </div>
             </div>
         </div>
+        <br/>
     </footer>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/css/bootstrap-slider.min.css" integrity="sha256-pO9/5PQba+AqEbehe+LDIXgbKSXTlmwgoeayBfGRwjw=" crossorigin="anonymous" />
@@ -117,15 +110,6 @@
             /* Margin bottom by footer height */
             margin-bottom: 76px;
         }
-        .footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 76px;
-            line-height: 60px; /* Vertically center the text there */
-            background-color: #f5f5f5;
-        }
-
 
         .slider-horizontal {
             width: 50% !important;
@@ -148,6 +132,16 @@
             margin-left: 0px !important;
         }
 
+        span.spaced {
+            margin: 0 6px 0 6px;
+        }
+
+        div.progressBar {
+            display: inline-block;
+            width: 75%;
+            height: 2px;
+            margin-bottom: 0.25rem;
+        }
     </style>
 {% endblock %}
 
@@ -359,7 +353,7 @@
 
             $('#volumeSlider').slider({
                 max: 100,
-                value: 50,
+                value: 100,
                 tooltip: 'hide',
                 handle: 'square'
             });
@@ -367,6 +361,16 @@
             $('#volumeSlider').on('change', function(event){
                 player.volume(event.value.newValue / 100);
             })
+        });
+
+        $(document).ready(function(){
+            document.getElementById('progressBar').addEventListener('click', function (e) {
+                var coordinates = this.getBoundingClientRect();
+                var x = e.pageX - coordinates.x;
+
+                var clickedValue = x * 100.0 / coordinates.width;
+                console.log(clickedValue);
+            });
         });
     </script>
 {% endblock %}

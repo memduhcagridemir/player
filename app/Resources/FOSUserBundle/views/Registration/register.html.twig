@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Register | {{ project_name }}{% endblock %}
 
 {% block div_container %}
-    <br/>
-    <br/>
-    <br/>
     <div class="container">
+        <div class="row"><br/><br/><br/></div>
+
         <div class="row">
             <div class="col-md-8">
                 <div class="card-body">
@@ -25,19 +24,19 @@
                                 {% endif %}
                                 <label class="col-sm-4 col-form-label">{{ form_label(form.email) }}</label>
                                 <div class="col-sm-8">
-                                    {{ form_widget(form.email, {'attr': {'class': 'form-control'} }) }}
+                                    {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'johndoe@example.com'} }) }}
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                {% if form.username.vars.errors|length %}
+                                {% if form.name.vars.errors|length %}
                                     <div class="alert alert-danger col-sm-12" role="alert">
-                                        {{ form_errors(form.username) }}
+                                        {{ form_errors(form.name) }}
                                     </div>
                                 {% endif %}
-                                <label class="col-sm-4 col-form-label">{{ form_label(form.username) }}</label>
+                                <label class="col-sm-4 col-form-label">{{ form_label(form.name) }}</label>
                                 <div class="col-sm-8">
-                                    {{ form_widget(form.username, {'attr': {'class': 'form-control'} }) }}
+                                    {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'John Doe'} }) }}
                                 </div>
                             </div>
 
@@ -49,7 +48,7 @@
                                 {% endif %}
                                 <label class="col-sm-4 col-form-label">{{ form_label(form.plainPassword.first) }}</label>
                                 <div class="col-sm-8">
-                                    {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'} }) }}
+                                    {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': '******'} }) }}
                                 </div>
                             </div>
 
@@ -61,12 +60,24 @@
                                 {% endif %}
                                 <label class="col-sm-4 col-form-label">{{ form_label(form.plainPassword.second) }}</label>
                                 <div class="col-sm-8">
-                                    {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'} }) }}
+                                    {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder': '******'} }) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                {% if form.bio.vars.errors|length %}
+                                    <div class="alert alert-danger col-sm-12" role="alert">
+                                        {{ form_errors(form.bio) }}
+                                    </div>
+                                {% endif %}
+                                <label class="col-sm-4 col-form-label">{{ form_label(form.bio) }}</label>
+                                <div class="col-sm-8">
+                                    {{ form_widget(form.bio, {'attr': {'class': 'form-control', 'placeholder': 'A short bio.'} }) }}
                                 </div>
                             </div>
 
                             <div>
-                                <input type="submit" class="btn btn-success" value="{{ 'registration.submit'|trans }}" />
+                                <input type="submit" class="btn btn-dark" value="{{ 'registration.submit'|trans }}" />
                             </div>
                             {{ form_end(form) }}
                         {% endblock fos_user_content %}

@@ -20,9 +20,8 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
     {
         for ($u = 0; $u < 4; $u++) {
             $user = new User();
-            $user->setUsername("user_{$u}");
             $user->setPlainPassword('123');
-            $user->setName("Name_{$u}");
+            $user->setName("Name_{$u} Surname_{$u}");
             $user->setEmail("email{$u}@gmail.com");
             $user->setEnabled(true);
             $manager->persist($user);
