@@ -12,11 +12,6 @@
             <div class="col-md-12">
                 {{ form_start(form) }}
                 <div class="form-group row">
-                    {{ form_label(form.name, 'Başlık', {'label_attr': {'class': 'col-form-label'}}) }}
-                    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.name) }}
-                </div>
-                <div class="form-group row">
                     {{ form_label(form.audioFile) }}
                     {{ form_widget(form.audioFile, {'attr': {'class': 'file'}}) }}
                     {{ form_errors(form.audioFile) }}

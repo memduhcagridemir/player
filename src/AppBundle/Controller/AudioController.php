@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Audio;
+use AppBundle\Form\AudioType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +27,7 @@ class AudioController extends Controller
     {
         $audio = new Audio();
         $audio->setUser($this->getUser());
-        $form = $this->createForm('AppBundle\Form\AudioType', $audio);
+        $form = $this->createForm(AudioType::class, $audio);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -40,6 +41,8 @@ class AudioController extends Controller
 
             $em->persist($audio);
             $em->flush();
+
+            return $this->redirect('AppBundle\Controller\ManageController::index');
         }
 
         return $this->render(':manage:upload.html.twig', array(

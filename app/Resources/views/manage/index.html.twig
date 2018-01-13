@@ -8,7 +8,8 @@
     <br/>
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="card col-md-9">
+                <br/>
                 <nav class="nav nav-tabs" id="myTab" role="tablist">
                     {% for playlist in playlists %}
                         <a class="nav-item nav-link" id="{{ playlist.name }}-tab" data-toggle="tab" href="#{{ playlist.name }}" role="tab" aria-controls="nav-home" aria-selected="true">{{ playlist.name }}</a>
@@ -28,7 +29,7 @@
                                 {% for audio in playlist.audios %}
                                     <tr>
                                         <td>{{ loop.index }}</td>
-                                        <td>{{ audio.name }}</td>
+                                        <td><a href="{{ path('audio_edit', {'id': audio.id}) }}">{{ audio.name }}</a></td>
                                         <td>{{ audio.length }}</td>
                                         <td>
                                             {% for audioPlaylist in audio.playlists %}
@@ -49,7 +50,11 @@
                     </script>
                 </div>
             </div>
-
+            <div class="card col-md-3">
+                {{ render(controller(
+                'AppBundle\\Controller\\AudioController::newAction'
+                )) }}
+            </div>
         </div>
     </div>
 {% endblock %}

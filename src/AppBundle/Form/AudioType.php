@@ -14,7 +14,7 @@ class AudioType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')->add('audioFile', FileType::class);
+        $builder->add('audioFile', FileType::class);
     }
     
     /**
