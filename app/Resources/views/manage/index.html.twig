@@ -10,44 +10,80 @@
         <div class="row">
             <div class="card col-md-9">
                 <br/>
-                <nav class="nav nav-tabs" id="myTab" role="tablist">
-                    {% for playlist in playlists %}
-                        <a class="nav-item nav-link" id="{{ playlist.name }}-tab" data-toggle="tab" href="#{{ playlist.name }}" role="tab" aria-controls="nav-home" aria-selected="true">{{ playlist.name }}</a>
-                    {% endfor %}
-                </nav>
-                <div class="tab-content" id="nav-tabContent">
-                    {% for playlist in playlists %}
-                        <div class="tab-pane fade" id="{{ playlist.name }}" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <table class="table table-striped">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Playlists</h3>
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Length</th>
-                                    <th>Playlists</th>
+                                    <td>Order</td>
+                                    <td>Playlist name</td>
+                                    <td>Number of songs</td>
+                                    <td>Date created</td>
+                                    <td>Actions</td>
                                 </tr>
-
-                                {% for audio in playlist.audios %}
+                            </thead>
+                            <tbody id="playlist_list">
+                                {% for playlist in playlists %}
                                     <tr>
-                                        <td>{{ loop.index }}</td>
-                                        <td><a href="{{ path('audio_edit', {'id': audio.id}) }}">{{ audio.name }}</a></td>
-                                        <td>{{ audio.length }}</td>
+                                        <td><span class="oi oi-resize-height order-handle"></span></td>
+                                        <td>{{ playlist.name }}</td>
+                                        <td>5</td>
+                                        <td>18:18:18</td>
                                         <td>
-                                            {% for audioPlaylist in audio.playlists %}
-                                                <span class="badge badge-success">{{ audioPlaylist.name }}</span>
-                                            {% endfor %}
+                                            <span class="oi oi-pencil" data-toggle="popover" data-placement="bottom" data-original-title="Edit Playlist"   data-html="true" data-content='{{ render(controller('AppBundle\\Controller\\PlaylistController::editAction',   {'playlist': playlist})) }}'></span>
                                         </td>
                                     </tr>
                                 {% endfor %}
-                            </table>
-                        </div>
-                    {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-                    <script type="text/javascript">
-                        $(document).ready(function(){
-                            $('nav#myTab a:first').addClass('active');
-                            $('div#nav-tabContent div:first').addClass('show').addClass('active');
-                        });
-                    </script>
+                <div class="row">
+                    <div class="col-md-12">
+                        <nav class="nav nav-tabs" id="myTab" role="tablist">
+                            {% for playlist in playlists %}
+                                <a class="nav-item nav-link" id="{{ playlist.name }}-tab" data-toggle="tab" href="#{{ playlist.name }}" role="tab" aria-controls="nav-home" aria-selected="true">{{ playlist.name }}</a>
+                            {% endfor %}
+                            <a href="#" class="nav-item nav-link"  data-toggle="popover" data-placement="top" data-original-title="New Playlist" data-html="true"
+                               data-content='{{ render(controller('AppBundle\\Controller\\PlaylistController::newAction')) }}'> + </a>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            {% for playlist in playlists %}
+                                <div class="tab-pane fade" id="{{ playlist.name }}" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Length</th>
+                                            <th>Playlists</th>
+                                        </tr>
+
+                                        {% for audio in playlist.audios %}
+                                            <tr>
+                                                <td>{{ loop.index }}</td>
+                                                <td><a href="{{ path('audio_edit', {'id': audio.id}) }}">{{ audio.name }}</a></td>
+                                                <td>{{ audio.length }}</td>
+                                                <td>
+                                                    {% for audioPlaylist in audio.playlists %}
+                                                        <span class="badge badge-success">{{ audioPlaylist.name }}</span>
+                                                    {% endfor %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            {% endfor %}
+
+                            <script type="text/javascript">
+                                $(document).ready(function(){
+                                    $('nav#myTab a:first').addClass('active');
+                                    $('div#nav-tabContent div:first').addClass('show').addClass('active');
+                                });
+                            </script>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card col-md-3">
@@ -57,5 +93,15 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.6.1/Sortable.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var el = document.getElementById('playlist_list');
+            var sortable = Sortable.create(el, {
+                handle: '.order-handle'
+            });
+        });
+    </script>
 {% endblock %}
 

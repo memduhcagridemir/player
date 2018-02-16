@@ -38,9 +38,6 @@
                                 <a class="nav-link" href="{{ path('manage_index') }}">Manage</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('audio_new') }}">Upload</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="{{ path('fos_user_profile_edit') }}">Profile</a>
                             </li>
                             <li class="nav-item">
@@ -62,7 +59,7 @@
         {% block div_container %}{% endblock %}
 
         {% block footer %}
-            <footer class="footer fixed-bottom">
+            <footer class="footer">
                 <hr>
                 <div class="container">
                     <span class="text-muted"><p>Place footer content here.</p></span>
@@ -81,4 +78,11 @@
             min-height: 80vh;
         }
     </style>
+
+    <script>
+        $(document).ready(
+            function(){
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
 </html>

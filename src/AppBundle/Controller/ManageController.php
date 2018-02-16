@@ -28,15 +28,6 @@ class ManageController extends Controller
         /** $playlists =  */
         $playlists = $em->getRepository('AppBundle:Playlist')->findBy(['user' => $this->getUser()->getId()]);
 
-        $playlist = new Playlist();
-        $playlist->setName('All');
-
-        $audios = $em->getRepository('AppBundle:Audio')->findBy(['user' => $this->getUser()->getId()]);
-        foreach($audios as &$audio) {
-            $playlist->addAudio($audio);
-        }
-        $playlists[] = $playlist;
-
         return $this->render(':manage:index.html.twig', ['playlists' => $playlists]);
     }
 }
