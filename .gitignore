@@ -1,20 +1,21 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+/.env
 /.idea/
-/.vagrant/
+/.data/
+!/.data/.gitkeep
+/logs/
+!/logs/.gitkeep
 
-/.web-server-pid
-/ubuntu-xenial-16.04-cloudimg-console.log
+/player/vendor/
+/player/web/bundles/
 
-/vendor/
-/web/bundles/
+/player/var/
+!/player/var/cache/.gitkeep
+!/player/var/logs/.gitkeep
+!/player/var/sessions/.gitkeep
 
-/var/
-!var/cache/.gitkeep
-!var/logs/.gitkeep
-!var/sessions/.gitkeep
+/player/uploads/*
+!/player/uploads/.gitkeep
 
-/uploads/*
-!/uploads/.gitkeep
-
-/app/config/parameters.yml
+/player/app/config/parameters.yml
