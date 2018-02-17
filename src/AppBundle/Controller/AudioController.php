@@ -45,7 +45,7 @@ class AudioController extends Controller
             return $this->redirectToRoute('manage_index');
         }
 
-        return $this->render(':manage:upload.html.twig', array(
+        return $this->render(':audio:upload.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -68,7 +68,7 @@ class AudioController extends Controller
             return $this->redirectToRoute('audio_edit', array('id' => $audio->getId()));
         }
 
-        return $this->render(':manage:edit.html.twig', array(
+        return $this->render(':audio:edit.html.twig', array(
             'audio' => $audio,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

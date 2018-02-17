@@ -38,7 +38,7 @@ class PlaylistController extends Controller
             return $this->redirectToRoute('manage_index');
         }
 
-        return $this->render(':manage:playlist_new.html.twig', array(
+        return $this->render(':playlist:new.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -60,7 +60,7 @@ class PlaylistController extends Controller
             return $this->redirectToRoute('manage_index');
         }
 
-        return $this->render(':manage:playlist_edit.html.twig', array(
+        return $this->render(':playlist:edit.html.twig', array(
             'playlist' => $playlist,
             'form' => $editForm->createView()
         ));
@@ -90,7 +90,7 @@ class PlaylistController extends Controller
             return $this->redirectToRoute('manage_index');
         }
 
-        return $this->render(':manage:playlist_delete.html.twig', [
+        return $this->render(':playlist:delete.html.twig', [
             'playlist' => $playlist,
             'form' => $form->createView()
         ]);

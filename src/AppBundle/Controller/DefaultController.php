@@ -13,7 +13,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('::index.html.twig');
+        return $this->render(':default:index.html.twig');
     }
 
     /**
@@ -27,7 +27,7 @@ class DefaultController extends Controller
             'user' => $this->getUser()
         ]);
 
-        return $this->render('::listen.html.twig', [
+        return $this->render(':default:listen.html.twig', [
             'playlists' => $playlists
         ]);
     }
