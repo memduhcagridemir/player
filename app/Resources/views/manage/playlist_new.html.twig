@@ -1,4 +1,4 @@
-{{ form_start(form) }}
+{{ form_start(form, {'action': path('playlist_new'), 'method': 'POST'}) }}
 <div class="form-group row">
     {{ form_label(form.name) }}
     {{ form_widget(form.name) }}

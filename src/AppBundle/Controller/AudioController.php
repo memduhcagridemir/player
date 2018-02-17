@@ -42,7 +42,7 @@ class AudioController extends Controller
             $em->persist($audio);
             $em->flush();
 
-            return $this->redirect('AppBundle\Controller\ManageController::index');
+            return $this->redirectToRoute('manage_index');
         }
 
         return $this->render(':manage:upload.html.twig', array(

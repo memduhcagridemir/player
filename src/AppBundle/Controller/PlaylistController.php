@@ -35,7 +35,7 @@ class PlaylistController extends Controller
             $em->persist($playlist);
             $em->flush();
 
-            return $this->redirect('AppBundle\Controller\ManageController::index');
+            return $this->redirectToRoute('manage_index');
         }
 
         return $this->render(':manage:playlist_new.html.twig', array(
