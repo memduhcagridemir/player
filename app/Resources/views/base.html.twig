@@ -19,6 +19,26 @@
             {% block extrascripts %}{% endblock %}
         {% endblock %}
 
+        <style>
+            body {
+                background-image: url(/img/dust_scratches.png);
+                background-attachment: fixed;
+            }
+
+            body > div.container {
+                min-height: 80vh;
+            }
+
+            .icon-button {
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                outline: none;
+                border: 0;
+                background: transparent;
+            }
+        </style>
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
@@ -36,9 +56,6 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('manage_index') }}">Manage</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('manage_upload') }}">Upload</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('fos_user_profile_edit') }}">Profile</a>
@@ -62,7 +79,7 @@
         {% block div_container %}{% endblock %}
 
         {% block footer %}
-            <footer class="footer fixed-bottom">
+            <footer class="footer">
                 <hr>
                 <div class="container">
                     <span class="text-muted"><p>Place footer content here.</p></span>
@@ -71,14 +88,10 @@
         {% endblock %}
     </body>
 
-    <style>
-        body {
-            background-image: url(/img/dust_scratches.png);
-            background-attachment: fixed;
-        }
-
-        body > div.container {
-            min-height: 80vh;
-        }
-    </style>
+    <script>
+        $(document).ready(
+            function(){
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
 </html>

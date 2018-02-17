@@ -1,32 +1,11 @@
-{% extends 'base.html.twig' %}
+{{ form_start(form, {'action': path('audio_new'), 'method': 'POST'}) }}
+<div class="form-group row">
+    {{ form_label(form.audioFile) }}
+    {{ form_widget(form.audioFile, {'attr': {'class': 'file'}}) }}
+    {{ form_errors(form.audioFile) }}
+</div>
+<div class="form-group row">
+    <button type="submit" class="btn btn-primary">Upload</button>
+</div>
 
-{% block title %}Upload | {{ project_name }}{% endblock %}
-
-{% block div_container %}
-    <br/>
-    <br/>
-    <br/>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                {{ form_start(form) }}
-                <div class="form-group row">
-                    {{ form_label(form.name, 'Başlık', {'label_attr': {'class': 'col-form-label'}}) }}
-                    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.name) }}
-                </div>
-                <div class="form-group row">
-                    {{ form_label(form.audioFile) }}
-                    {{ form_widget(form.audioFile, {'attr': {'class': 'file'}}) }}
-                    {{ form_errors(form.audioFile) }}
-                </div>
-                <div class="form-group row">
-                    <button type="submit" class="btn btn-primary">Upload</button>
-                </div>
-
-                {{ form_end(form) }}
-            </div>
-        </div>
-    </div>
-{% endblock %}
+{{ form_end(form) }}

@@ -14,7 +14,7 @@
 !var/logs/.gitkeep
 !var/sessions/.gitkeep
 
-/web/audio/*
-!web/audio/.gitkeep
+/uploads/*
+!/uploads/.gitkeep
 
 /app/config/parameters.yml

@@ -29,6 +29,17 @@ class PlaylistFixtures extends AbstractFixture implements OrderedFixtureInterfac
                 $playlist->setName("Playlist_{$p}");
                 $manager->persist($playlist);
             }
+
+            $playlist = new Playlist();
+            $playlist->setUser($this->getReference("User_{$u}"));
+
+            for ($p = 0; $p < 4; $p++) {
+                for($a=0; $a<4; $a++) {
+                    $playlist->addAudio($this->getReference("Audio_{$u}{$p}{$a}"));
+                }
+            }
+            $playlist->setName("All");
+            $manager->persist($playlist);
         }
 
         $manager->flush();
