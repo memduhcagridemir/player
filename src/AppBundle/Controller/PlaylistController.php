@@ -70,35 +70,29 @@ class PlaylistController extends Controller
      * Deletes a playlist entity.
      *
      * @Route("/{id}", name="playlist_delete")
-     * @Method("DELETE")
+     * @Method({"GET", "DELETE"})
      */
     public function deleteAction(Request $request, Playlist $playlist)
     {
-        $form = $this->createDeleteForm($playlist);
+        $form = $this->createFormBuilder()
+            ->setAction($this->generateUrl('playlist_delete', array('id' => $playlist->getId())))
+            ->setMethod('DELETE')
+            ->getForm()
+        ;
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($playlist);
             $em->flush();
+
+            return $this->redirectToRoute('manage_index');
         }
 
-        return $this->redirectToRoute('manage_index');
-    }
-
-    /**
-     * Creates a form to delete a audio entity.
-     *
-     * @param Audio $audio The audio entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Playlist $playlist)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('playlist_delete', array('id' => $playlist->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        return $this->render(':manage:playlist_delete.html.twig', [
+            'playlist' => $playlist,
+            'form' => $form->createView()
+        ]);
     }
 }

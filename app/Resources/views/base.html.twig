@@ -19,6 +19,26 @@
             {% block extrascripts %}{% endblock %}
         {% endblock %}
 
+        <style>
+            body {
+                background-image: url(/img/dust_scratches.png);
+                background-attachment: fixed;
+            }
+
+            body > div.container {
+                min-height: 80vh;
+            }
+
+            .icon-button {
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                outline: none;
+                border: 0;
+                background: transparent;
+            }
+        </style>
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
@@ -67,17 +87,6 @@
             </footer>
         {% endblock %}
     </body>
-
-    <style>
-        body {
-            background-image: url(/img/dust_scratches.png);
-            background-attachment: fixed;
-        }
-
-        body > div.container {
-            min-height: 80vh;
-        }
-    </style>
 
     <script>
         $(document).ready(

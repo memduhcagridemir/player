@@ -12,7 +12,13 @@
                 <br/>
                 <div class="row">
                     <div class="col-md-12">
-                        <h3>Playlists</h3>
+                        <h3>
+                            Playlists
+                            <small class="text-muted text-right">
+                                <span class="oi oi-plus" data-toggle="popover" data-placement="top" data-original-title="New Playlist" data-html="true"
+                                      data-content='{{ render(controller('AppBundle\\Controller\\PlaylistController::newAction')) }}'> Create new playlist.</span>
+                            </small>
+                        </h3>
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -32,6 +38,7 @@
                                         <td>18:18:18</td>
                                         <td>
                                             <span class="oi oi-pencil" data-toggle="popover" data-placement="bottom" data-original-title="Edit Playlist"   data-html="true" data-content='{{ render(controller('AppBundle\\Controller\\PlaylistController::editAction',   {'playlist': playlist})) }}'></span>
+                                            {{ render(controller('AppBundle\\Controller\\PlaylistController::deleteAction',   {'playlist': playlist})) }}
                                         </td>
                                     </tr>
                                 {% endfor %}
