@@ -8,93 +8,88 @@
     <br/>
     <div class="container">
         <div class="row">
-            <div class="card col-md-9">
+            <div class="card col-md-8">
                 <br/>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>
-                            Playlists
-                            <small class="text-muted text-right">
-                                <span class="oi oi-plus" data-toggle="popover" data-placement="top" data-original-title="New Playlist" data-html="true"
-                                      data-content='{{ render(controller('AppBundle\\Controller\\PlaylistController::newAction')) }}'> Create new playlist.</span>
-                            </small>
-                        </h3>
-                        <table class="table table-hover">
-                            <thead>
+                <h3>
+                    Playlists
+                    <small class="text-muted text-right">
+                        <span class="oi oi-plus" data-toggle="popover" data-placement="top" data-original-title="New Playlist" data-html="true"
+                              data-content='{{ render(controller('AppBundle\\Controller\\PlaylistController::newAction')) }}'> Create new playlist.</span>
+                    </small>
+                </h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td>Order</td>
+                            <td>Playlist name</td>
+                            <td>Number of songs</td>
+                            <td>Date created</td>
+                            <td>Actions</td>
+                        </tr>
+                    </thead>
+                    <tbody id="playlist_list">
+                        {% for playlist in playlists %}
+                            <tr>
+                                <td><span class="oi oi-resize-height order-handle"></span></td>
+                                <td>{{ playlist.name }}</td>
+                                <td>5</td>
+                                <td>18:18:18</td>
+                                <td>
+                                    <span class="oi oi-pencil" data-toggle="popover" data-placement="bottom" data-original-title="Edit Playlist"   data-html="true" data-content='{{ render(controller('AppBundle\\Controller\\PlaylistController::editAction',   {'playlist': playlist})) }}'></span>
+                                    {{ render(controller('AppBundle\\Controller\\PlaylistController::deleteAction',   {'playlist': playlist})) }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card col-md-3 ml-auto">
+                {{ render(controller('AppBundle\\Controller\\AudioController::newAction')) }}
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="card col-md-12">
+                <br/>
+                <nav class="nav nav-tabs" id="myTab" role="tablist">
+                    {% for playlist in playlists %}
+                        <a class="nav-item nav-link" id="{{ playlist.name }}-tab" data-toggle="tab" href="#{{ playlist.name }}" role="tab" aria-controls="nav-home" aria-selected="true">{{ playlist.name }}</a>
+                    {% endfor %}
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    {% for playlist in playlists %}
+                        <div class="tab-pane fade" id="{{ playlist.name }}" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <table class="table table-striped">
                                 <tr>
-                                    <td>Order</td>
-                                    <td>Playlist name</td>
-                                    <td>Number of songs</td>
-                                    <td>Date created</td>
-                                    <td>Actions</td>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Length</th>
+                                    <th>Playlists</th>
                                 </tr>
-                            </thead>
-                            <tbody id="playlist_list">
-                                {% for playlist in playlists %}
+
+                                {% for audio in playlist.audios %}
                                     <tr>
-                                        <td><span class="oi oi-resize-height order-handle"></span></td>
-                                        <td>{{ playlist.name }}</td>
-                                        <td>5</td>
-                                        <td>18:18:18</td>
+                                        <td>{{ loop.index }}</td>
+                                        <td><a href="{{ path('audio_edit', {'id': audio.id}) }}">{{ audio.name }}</a></td>
+                                        <td>{{ audio.length }}</td>
                                         <td>
-                                            <span class="oi oi-pencil" data-toggle="popover" data-placement="bottom" data-original-title="Edit Playlist"   data-html="true" data-content='{{ render(controller('AppBundle\\Controller\\PlaylistController::editAction',   {'playlist': playlist})) }}'></span>
-                                            {{ render(controller('AppBundle\\Controller\\PlaylistController::deleteAction',   {'playlist': playlist})) }}
+                                            {% for audioPlaylist in audio.playlists %}
+                                                <span class="badge badge-success">{{ audioPlaylist.name }}</span>
+                                            {% endfor %}
                                         </td>
                                     </tr>
                                 {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <nav class="nav nav-tabs" id="myTab" role="tablist">
-                            {% for playlist in playlists %}
-                                <a class="nav-item nav-link" id="{{ playlist.name }}-tab" data-toggle="tab" href="#{{ playlist.name }}" role="tab" aria-controls="nav-home" aria-selected="true">{{ playlist.name }}</a>
-                            {% endfor %}
-                            <a href="#" class="nav-item nav-link"  data-toggle="popover" data-placement="top" data-original-title="New Playlist" data-html="true"
-                               data-content='{{ render(controller('AppBundle\\Controller\\PlaylistController::newAction')) }}'> + </a>
-                        </nav>
-                        <div class="tab-content" id="nav-tabContent">
-                            {% for playlist in playlists %}
-                                <div class="tab-pane fade" id="{{ playlist.name }}" role="tabpanel" aria-labelledby="nav-home-tab">
-                                    <table class="table table-striped">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Length</th>
-                                            <th>Playlists</th>
-                                        </tr>
-
-                                        {% for audio in playlist.audios %}
-                                            <tr>
-                                                <td>{{ loop.index }}</td>
-                                                <td><a href="{{ path('audio_edit', {'id': audio.id}) }}">{{ audio.name }}</a></td>
-                                                <td>{{ audio.length }}</td>
-                                                <td>
-                                                    {% for audioPlaylist in audio.playlists %}
-                                                        <span class="badge badge-success">{{ audioPlaylist.name }}</span>
-                                                    {% endfor %}
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    </table>
-                                </div>
-                            {% endfor %}
-
-                            <script type="text/javascript">
-                                $(document).ready(function(){
-                                    $('nav#myTab a:first').addClass('active');
-                                    $('div#nav-tabContent div:first').addClass('show').addClass('active');
-                                });
-                            </script>
+                            </table>
                         </div>
-                    </div>
+                    {% endfor %}
+
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                            $('nav#myTab a:first').addClass('active');
+                            $('div#nav-tabContent div:first').addClass('show').addClass('active');
+                        });
+                    </script>
                 </div>
-            </div>
-            <div class="card col-md-3">
-                {{ render(controller('AppBundle\\Controller\\AudioController::newAction')) }}
             </div>
         </div>
     </div>

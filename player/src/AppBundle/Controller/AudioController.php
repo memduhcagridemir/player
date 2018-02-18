@@ -27,7 +27,9 @@ class AudioController extends Controller
     {
         $audio = new Audio();
         $audio->setUser($this->getUser());
-        $form = $this->createForm(AudioType::class, $audio);
+        $form = $this->createForm(AudioType::class, $audio, [
+            'user' => $this->getUser()
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -59,13 +61,16 @@ class AudioController extends Controller
     public function editAction(Request $request, Audio $audio)
     {
         $deleteForm = $this->createDeleteForm($audio);
-        $editForm = $this->createForm('AppBundle\Form\AudioType', $audio);
+        $editForm = $this->createForm('AppBundle\Form\AudioType', $audio, [
+            'user' => $this->getUser(),
+            'form_type' => AudioType::$TYPE_UPDATE
+        ]);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('audio_edit', array('id' => $audio->getId()));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($audio);
+            $em->flush();
         }
 
         return $this->render(':audio:edit.html.twig', array(

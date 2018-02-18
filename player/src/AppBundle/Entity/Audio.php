@@ -369,6 +369,8 @@ class Audio
     {
         $this->playlists[] = $playlist;
 
+        $playlist->addAudio($this);
+
         return $this;
     }
 
@@ -380,6 +382,7 @@ class Audio
     public function removePlaylist(\AppBundle\Entity\Playlist $playlist)
     {
         $this->playlists->removeElement($playlist);
+        $playlist->removeAudio($this);
     }
 
     /**
