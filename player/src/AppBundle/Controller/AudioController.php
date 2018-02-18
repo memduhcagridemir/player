@@ -87,7 +87,7 @@ class AudioController extends Controller
      * Deletes a audio entity.
      *
      * @Route("/{id}", name="audio_delete")
-     * @Method("DELETE")
+     * @Method({"GET", "DELETE"})
      */
     public function deleteAction(Request $request, Audio $audio)
     {
@@ -102,7 +102,11 @@ class AudioController extends Controller
             return $this->redirectToRoute('manage_index');
         }
 
-        return $this->redirectToRoute('audio_index');
+        return $this->render(':audio:delete.html.twig', [
+            'audio' => $audio,
+            'form' => $form->createView()
+        ]);
+
     }
 
     /**
