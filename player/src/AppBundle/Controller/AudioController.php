@@ -28,7 +28,8 @@ class AudioController extends Controller
         $audio = new Audio();
         $audio->setUser($this->getUser());
         $form = $this->createForm(AudioType::class, $audio, [
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
+            'form_type' => AudioType::$TYPE_CREATE
         ]);
         $form->handleRequest($request);
 
@@ -71,6 +72,8 @@ class AudioController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($audio);
             $em->flush();
+
+            return $this->redirectToRoute('manage_index');
         }
 
         return $this->render(':audio:edit.html.twig', array(
@@ -95,6 +98,8 @@ class AudioController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($audio);
             $em->flush();
+
+            return $this->redirectToRoute('manage_index');
         }
 
         return $this->redirectToRoute('audio_index');

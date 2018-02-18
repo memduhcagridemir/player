@@ -52,11 +52,36 @@
             <div class="card col-md-12">
                 <br/>
                 <nav class="nav nav-tabs" id="myTab" role="tablist">
+                    <a class="nav-item nav-link" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="nav-home" aria-selected="true">All</a>
                     {% for playlist in playlists %}
                         <a class="nav-item nav-link" id="{{ playlist.name }}-tab" data-toggle="tab" href="#{{ playlist.name }}" role="tab" aria-controls="nav-home" aria-selected="true">{{ playlist.name }}</a>
                     {% endfor %}
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade" id="all" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Length</th>
+                                <th>Playlists</th>
+                            </tr>
+
+                            {% for audio in user.audios %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td><a href="{{ path('audio_edit', {'id': audio.id}) }}">{{ audio.name }}</a></td>
+                                    <td>{{ audio.length }}</td>
+                                    <td>
+                                        {% for audioPlaylist in audio.playlists %}
+                                            <span class="badge badge-success">{{ audioPlaylist.name }}</span>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+
                     {% for playlist in playlists %}
                         <div class="tab-pane fade" id="{{ playlist.name }}" role="tabpanel" aria-labelledby="nav-home-tab">
                             <table class="table table-striped">
