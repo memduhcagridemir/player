@@ -31,6 +31,16 @@ class User extends BaseUser
     protected $bio;
 
     /**
+     * @ORM\OneToMany(targetEntity="Audio", mappedBy="user")
+     */
+    protected $audios;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Playlist", mappedBy="user")
+     */
+    protected $playlists;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -114,5 +124,73 @@ class User extends BaseUser
         parent::setEmailCanonical($emailCanonical);
 
         return $this;
+    }
+
+    /**
+     * Add audio
+     *
+     * @param \AppBundle\Entity\Audio $audio
+     *
+     * @return User
+     */
+    public function addAudio(\AppBundle\Entity\Audio $audio)
+    {
+        $this->audios[] = $audio;
+
+        return $this;
+    }
+
+    /**
+     * Remove audio
+     *
+     * @param \AppBundle\Entity\Audio $audio
+     */
+    public function removeAudio(\AppBundle\Entity\Audio $audio)
+    {
+        $this->audios->removeElement($audio);
+    }
+
+    /**
+     * Get audios
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAudios()
+    {
+        return $this->audios;
+    }
+
+    /**
+     * Add playlist
+     *
+     * @param \AppBundle\Entity\Playlist $playlist
+     *
+     * @return User
+     */
+    public function addPlaylist(\AppBundle\Entity\Playlist $playlist)
+    {
+        $this->playlists[] = $playlist;
+
+        return $this;
+    }
+
+    /**
+     * Remove playlist
+     *
+     * @param \AppBundle\Entity\Playlist $playlist
+     */
+    public function removePlaylist(\AppBundle\Entity\Playlist $playlist)
+    {
+        $this->playlists->removeElement($playlist);
+    }
+
+    /**
+     * Get playlists
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlaylists()
+    {
+        return $this->playlists;
     }
 }

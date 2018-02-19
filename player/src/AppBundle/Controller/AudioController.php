@@ -27,7 +27,10 @@ class AudioController extends Controller
     {
         $audio = new Audio();
         $audio->setUser($this->getUser());
-        $form = $this->createForm(AudioType::class, $audio);
+        $form = $this->createForm(AudioType::class, $audio, [
+            'user' => $this->getUser(),
+            'form_type' => AudioType::$TYPE_CREATE
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -59,13 +62,18 @@ class AudioController extends Controller
     public function editAction(Request $request, Audio $audio)
     {
         $deleteForm = $this->createDeleteForm($audio);
-        $editForm = $this->createForm('AppBundle\Form\AudioType', $audio);
+        $editForm = $this->createForm('AppBundle\Form\AudioType', $audio, [
+            'user' => $this->getUser(),
+            'form_type' => AudioType::$TYPE_UPDATE
+        ]);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($audio);
+            $em->flush();
 
-            return $this->redirectToRoute('audio_edit', array('id' => $audio->getId()));
+            return $this->redirectToRoute('manage_index');
         }
 
         return $this->render(':audio:edit.html.twig', array(
@@ -79,7 +87,7 @@ class AudioController extends Controller
      * Deletes a audio entity.
      *
      * @Route("/{id}", name="audio_delete")
-     * @Method("DELETE")
+     * @Method({"GET", "DELETE"})
      */
     public function deleteAction(Request $request, Audio $audio)
     {
@@ -90,9 +98,15 @@ class AudioController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($audio);
             $em->flush();
+
+            return $this->redirectToRoute('manage_index');
         }
 
-        return $this->redirectToRoute('audio_index');
+        return $this->render(':audio:delete.html.twig', [
+            'audio' => $audio,
+            'form' => $form->createView()
+        ]);
+
     }
 
     /**

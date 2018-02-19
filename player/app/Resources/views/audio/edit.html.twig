@@ -4,22 +4,33 @@
     <br/>
     <br/>
     <br/>
-    <br/>
-    <h1>Audio edit</h1>
+    <div class="container">
+        <div class="row">
+            <div class="card col-md-8">
+                <div class="card-body">
+                    <h4 class="card-title">Edit Audio</h4>
+                    <p class="card-text">
+                        {{ form_start(edit_form) }}
+                        {{ form_widget(edit_form) }}
+                        <input type="submit" value="Edit" />
+                        {{ form_end(edit_form) }}
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+                        <ul>
+                            <li>
+                                <a href="{{ path('manage_index') }}">Back to the list</a>
+                            </li>
+                            <li>
+                                {{ form_start(delete_form) }}
+                                <input type="submit" value="Delete">
+                                {{ form_end(delete_form) }}
+                            </li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="card col-md-3 ml-auto">
+            </div>
+        </div>
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('manage_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
 {% endblock %}
