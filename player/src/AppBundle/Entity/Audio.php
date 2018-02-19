@@ -52,6 +52,11 @@ class Audio
     protected $playlists;
 
     /**
+     * @ORM\Column(name="`filename`", type="string", length=128)
+     */
+    protected $filename;
+
+    /**
      * @ORM\Column(name="`size`", type="integer")
      */
     protected $size;
@@ -67,7 +72,7 @@ class Audio
     protected $originalName;
 
     /**
-     * @Vich\UploadableField(mapping="audio_file", fileNameProperty="name", size="size", mimeType="mimeType", originalName="originalName")
+     * @Vich\UploadableField(mapping="audio_file", fileNameProperty="filename", size="size", mimeType="mimeType", originalName="originalName")
      * @var File
      */
     protected $audioFile;
@@ -176,6 +181,7 @@ class Audio
     public function setOriginalName($originalName)
     {
         $this->originalName = $originalName;
+        $this->setName($originalName);
 
         return $this;
     }
@@ -393,5 +399,29 @@ class Audio
     public function getPlaylists()
     {
         return $this->playlists;
+    }
+
+    /**
+     * Set filename
+     *
+     * @param string $filename
+     *
+     * @return Audio
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    /**
+     * Get filename
+     *
+     * @return string
+     */
+    public function getFilename()
+    {
+        return $this->filename;
     }
 }
