@@ -38,8 +38,8 @@
                                 {% for audio in playlist.audios %}
                                     <tr class="d-flex">
                                         <td class="col-1">{{ loop.index }}</td>
-                                        <td class="col-1"><span class="oi oi-media-play"></span></td>
-                                        <td class="col-8"><span class="audio-item" data-toggle="tooltip" data-placement="top" data-file="{{ audio.name }}" title="{{ audio.originalName }}">{{ audio.originalName }}</span></td>
+                                        <td class="col-1"><span class="oi oi-media-play" onclick="setIndex({{ loop.index0 }})"></span></td>
+                                        <td class="col-8"><span class="audio-item" data-toggle="tooltip" data-placement="top" data-file="{{ audio.filename }}" data-title="{{ audio.name }}">{{ audio.name }}</span></td>
                                         <td class="col-2">{{ audio.length | sectotime}}</td>
                                     </tr>
                                 {% endfor %}
@@ -55,10 +55,13 @@
                     $('div#playlists a:first').addClass('active');
                     $('div#nav-tabContent div:first').addClass('show').addClass('active');
 
-                    updatePlaylist();
-                    $('a.list-group-item').each(function(key, value){
-                        $(value).on('click', updatePlaylist);
-                    }); // this is buggy
+                    var playlist_links = $('a.list-group-item');
+                    updatePlaylist(playlist_links[0].getAttribute('href'));
+                    playlist_links.each(function(key, value){
+                        $(value).on('click', function(){
+                            updatePlaylist(value.getAttribute('href'));
+                        });
+                    });
                 });
             </script>
         </div>
@@ -94,8 +97,8 @@
                 </div>
                 <div class="col-4 text-right">
                     <span id="timer">0:00 </span>
-                    <div class="progress progressBar" id="progressBar">
-                        <div class="progress-bar bg-dark" id="progress" role="progressbar"></div>
+                    <div class="progress progressBar" id="progressBar" style="padding-top: 5px; padding-bottom: 5px;">
+                        <div class="progress-bar bg-dark" id="progress" role="progressbar" style="height: 3px;"></div>
                     </div>
                     <span id="duration"> 0:00</span>
                 </div>
@@ -144,14 +147,12 @@
         div.progressBar {
             display: inline-block;
             width: 75%;
-            height: 2px;
-            margin-bottom: 0.25rem;
         }
     </style>
 {% endblock %}
 
 {% block extrascripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.4/howler.core.min.js" integrity="sha256-X01rV9/R1vbHm3CxMRt6AFMe0Ea9wnpAGsurU3QkZU4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.9/howler.core.min.js" integrity="sha256-mNkr4R+qixqsRzGF1i48AkZuexryKmdpB7J2FO3Obm4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.9.0/bootstrap-slider.min.js" integrity="sha256-NiU5YXcnxmS7LbwmzIDncQxjSF32v/p1TtCB76q9X/4=" crossorigin="anonymous"></script>
 
     <script src="/js/player.js"></script>
@@ -161,25 +162,30 @@
                 var coordinates = this.getBoundingClientRect();
                 var x = e.pageX - coordinates.x;
 
-                var clickedValue = x * 100.0 / coordinates.width;
+                var clickedValue = x / coordinates.width;
                 console.log(clickedValue);
+                window.player.seek(clickedValue);
             });
         });
     </script>
     <script type="text/javascript">
-        function updatePlaylist() {
+        function updatePlaylist(playlistSelector) {
             var playlist = [];
-            $('span.audio-item').each(function(key, audio){
+            $('div' + playlistSelector + ' span.audio-item').each(function(key, audio){
                 var audioObj = $(audio);
-                if(audioObj.is(":visible")) {
-                    playlist.push({
-                        title: audioObj.attr('title'),
-                        file:  '/audio/' + audioObj.attr('data-file'),
-                        howl: null
-                    });
-                }
+                playlist.push({
+                    title: audioObj.attr('data-title'),
+                    file:  '/audio/' + audioObj.attr('data-file'),
+                    howl: null
+                });
             });
             window.player = new Player(playlist);
+        }
+
+        function setIndex(ind) {
+            window.player.pause();
+            window.player.index = ind;
+            window.player.play(ind);
         }
 
         $(document).ready(function(){
@@ -188,7 +194,7 @@
             });
 
             $('span#playBtn').click(function(){
-                window.player.play();
+                window.player.play(window.player.index);
             });
 
             $('span#pauseBtn').click(function(){

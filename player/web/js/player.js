@@ -48,7 +48,9 @@ Player.prototype = {
         var self = this;
 
         var sound = self.playlist[self.index].howl;
-        sound.pause();
+        if(sound) {
+            sound.pause();
+        }
 
         playBtn.style.display = 'inline-block';
         pauseBtn.style.display = 'none';
