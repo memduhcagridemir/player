@@ -3,10 +3,6 @@
 {% block title %}Login | {{ project_name }}{% endblock %}
 
 {% block div_container %}
-    <br/>
-    <br/>
-    <br/>
-
     {% trans_default_domain 'FOSUserBundle' %}
 
     {% if error %}
@@ -14,6 +10,8 @@
     {% endif %}
 
     <div class="container">
+        <div class="row"><br/><br/><br/></div>
+
         <div class="row">
             <div class="col-8">
                 <div class="card-body">
@@ -59,7 +57,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card col-md-3 ml-auto">
+            <div class="card col-3 ml-auto">
                 <img class="card-img-top" src="/img/login-icon-3048.png" alt="Card image cap">
                 <div class="card-body">
                     <h4 class="card-title">Not signed up yet?</h4>
