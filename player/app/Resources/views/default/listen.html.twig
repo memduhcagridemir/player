@@ -21,30 +21,39 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="col-9">
+            <div class="card col-9">
                 <div class="tab-content" id="nav-tabContent">
                     {% for playlist in playlists %}
                         <div class="tab-pane fade" id="list-{{ playlist.id }}" role="tabpanel" aria-labelledby="list-{{ playlist.id }}">
-                            <table class="table table-hover">
-                                <thead>
-                                <tr class="d-flex">
-                                    <th class="col-1">#</th>
-                                    <th class="col-1">Play</th>
-                                    <th class="col-8">File Name</th>
-                                    <th class="col-2">Length</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for audio in playlist.audios %}
-                                    <tr class="d-flex">
-                                        <td class="col-1">{{ loop.index }}</td>
-                                        <td class="col-1"><span class="oi oi-media-play" onclick="setIndex({{ loop.index0 }})"></span></td>
-                                        <td class="col-8"><span class="audio-item" data-toggle="tooltip" data-placement="top" data-file="{{ audio.filename }}" data-title="{{ audio.name }}">{{ audio.name }}</span></td>
-                                        <td class="col-2">{{ audio.length | sectotime}}</td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    Songs in {{ playlist.name }}
+                                </h4>
+                                <br/>
+                                <div class="card-text">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr class="d-flex">
+                                            <th class="col-1">#</th>
+                                            <th class="col-9">File Name</th>
+                                            <th class="col-2 text-right">Length</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for audio in playlist.audios %}
+                                            <tr class="d-flex hover-play">
+                                                <td class="col-1">
+                                                    <span>{{ loop.index }}</span>
+                                                    <span class="oi oi-media-play" onclick="setIndex({{ loop.index0 }})" style="display: none;"></span>
+                                                </td>
+                                                <td class="col-9"><span class="audio-item" data-toggle="tooltip" data-placement="top" data-file="{{ audio.filename }}" data-title="{{ audio.name }}">{{ audio.name }}</span></td>
+                                                <td class="col-2 text-right">{{ audio.length | sectotime}}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
@@ -74,40 +83,40 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-1"></div>
-                <div class="col-2">
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="controlsOuter">
-                                <div class="controlsInner">
-                                    <span id="prevBtn"    class="spaced oi oi-media-step-backward"></span>
-                                    <span id="playBtn"    class="spaced oi oi-media-play"></span>
-                                    <span id="pauseBtn"   class="spaced oi oi-media-pause" style="display: none;"></span>
-                                    <span id="nextBtn"    class="spaced oi oi-media-step-forward"></span>
-                                    <span id="repeatBtn"  class="spaced oi oi-reload"></span>
-                                    <span id="shuffleBtn" class="spaced oi oi-random"></span>
-                                </div>
-                            </div>
+                <div class="col-4">
+                    <div id="title">
+                        <span id="track"></span>
+                    </div>
+                </div>
+                <div class="col-2 text-center">
+                    <div class="controlsOuter">
+                        <div class="controlsInner">
+                            <span id="shuffleBtn" class="spacedx2 oi oi-random"></span>
+                            <span id="prevBtn"    class="spaced oi oi-media-step-backward"></span>
+                            <span id="playBtn"    class="spaced oi oi-media-play"></span>
+                            <span id="pauseBtn"   class="spaced oi oi-media-pause" style="display: none;"></span>
+                            <span id="nextBtn"    class="spaced oi oi-media-step-forward"></span>
+                            <span id="repeatBtn"  class="spacedx2 oi oi-reload"></span>
                         </div>
-                        <div class="col-4">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-2">
                             <div class="sound-controls">
                                 <span class="oi oi-volume-high"></span>
                                 <span id="volumeSlider" data-slider-id="volumeSlider" data-slider-min="0"
                                       data-slider-max="100" data-slider-step="5" data-slider-value="100"></span>
                             </div>
                         </div>
+                        <div class="col-10">
+                            <span id="timer">0:00 </span>
+                            <div class="progress progressBar" id="progressBar" style="padding-top: 5px; padding-bottom: 5px;">
+                                <div class="progress-bar bg-dark" id="progress" role="progressbar" style="height: 3px;"></div>
+                            </div>
+                            <span id="duration"> 0:00</span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-4">
-                    <div id="title">
-                        <span id="track"></span>
-                    </div>
-                </div>
-                <div class="col-4 text-right">
-                    <span id="timer">0:00 </span>
-                    <div class="progress progressBar" id="progressBar" style="padding-top: 5px; padding-bottom: 5px;">
-                        <div class="progress-bar bg-dark" id="progress" role="progressbar" style="height: 3px;"></div>
-                    </div>
-                    <span id="duration"> 0:00</span>
                 </div>
                 <div class="col-1"></div>
             </div>
@@ -149,12 +158,16 @@
         }
 
         span.spaced {
-            margin: 0 6px 0 6px;
+            margin: 0 8px 0 8px;
+        }
+
+        span.spacedx2 {
+            margin: 0 16px 0 16px;
         }
 
         div.progressBar {
             display: inline-block;
-            width: 75%;
+            width: 80%;
         }
     </style>
 {% endblock %}
@@ -197,6 +210,20 @@
         }
 
         $(document).ready(function(){
+            $('.hover-play').each(function(idx, row){
+                var cell = $(row).children().first();
+
+                $(row)
+                    .mouseover(function(){
+                        $(cell).children().first().hide();
+                        $(cell).children().last().show();
+                    })
+                    .mouseout(function(){
+                        $(cell).children().first().show();
+                        $(cell).children().last().hide();
+                    });
+            });
+
             $('span#prevBtn').click(function(){
                 window.player.skip('prev');
             });

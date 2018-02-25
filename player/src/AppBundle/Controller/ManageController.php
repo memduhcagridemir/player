@@ -19,7 +19,7 @@ class ManageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $playlists = $em->getRepository('AppBundle:Playlist')->findBy(['user' => $this->getUser()->getId()]);
+        $playlists = $em->getRepository('AppBundle:Playlist')->findBy(['user' => $this->getUser()->getId()], ['createdAt' => 'DESC']);
         return $this->render(':manage:index.html.twig', [
             'playlists' => $playlists,
             'user' => $this->getUser()

@@ -28,6 +28,7 @@ class AudioFixtures extends AbstractFixture implements OrderedFixtureInterface
                     $file->setUser($this->getReference("User_{$u}"));
                     $file->setSize(1536);
                     $file->setMimeType('audio/mpeg');
+                    $file->setFilename('audio.mp3');
                     $file->setOriginalName('audio.mp3');
                     $manager->persist($file);
 

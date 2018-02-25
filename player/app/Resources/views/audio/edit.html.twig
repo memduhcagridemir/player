@@ -1,36 +1,25 @@
-{% extends 'base.html.twig' %}
+{{ form_start(edit_form, {'action': path('audio_edit', {'id': audio.id}), 'method': 'POST', 'attr': {'class': 'form-inline'}}) }}
+<div class="form-group row col-12">
+    <label for="title" class="col-2 col-form-label">Title</label>
+    {{ form_widget(edit_form.name, {'attr': {'class': 'form-control col-10', 'placeholder': 'Title'}}) }}
+</div>
 
-{% block div_container %}
-    <br/>
-    <br/>
-    <br/>
-    <div class="container">
-        <div class="row">
-            <div class="card col-md-8">
-                <div class="card-body">
-                    <h4 class="card-title">Edit Audio</h4>
-                    <p class="card-text">
-                        {{ form_start(edit_form) }}
-                        {{ form_widget(edit_form) }}
-                        <input type="submit" value="Edit" />
-                        {{ form_end(edit_form) }}
+<div class="form-group row col-12">
+    <ul>
+    {% for checkbox in edit_form.playlists %}
+        <li class="custom-control custom-checkbox justify-left">
+            {{ form_widget(checkbox, {'attr': {'class': 'custom-control-indicator col-2'}}) }}
+            {{ form_label(checkbox, {}, {'attr': {'class': 'custom-control-description col-10'}}) }}
+        </li>
+    {% endfor %}
+    </ul>
+</div>
 
-                        <ul>
-                            <li>
-                                <a href="{{ path('manage_index') }}">Back to the list</a>
-                            </li>
-                            <li>
-                                {{ form_start(delete_form) }}
-                                <input type="submit" value="Delete">
-                                {{ form_end(delete_form) }}
-                            </li>
-                        </ul>
-                    </p>
-                </div>
-            </div>
-            <div class="card col-md-3 ml-auto">
-            </div>
-        </div>
-    </div>
+<button type="submit" class="btn btn-dark">Save</button>
+{{ form_end(edit_form) }}
 
-{% endblock %}
+<style>
+    .justify-left {
+        justify-content: baseline !important;
+    }
+</style>
