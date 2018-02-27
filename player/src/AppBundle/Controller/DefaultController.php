@@ -23,9 +23,17 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $playlists = $em->getRepository('AppBundle:Playlist')->findBy([
-            'user' => $this->getUser()
-        ]);
+        if($this->getUser()) {
+            $playlists = $em->getRepository('AppBundle:Playlist')->findBy([
+                'user' => $this->getUser()
+            ]);
+        }
+        else {
+            $user = $em->getRepository('AppBundle:User')->findOneBy(['username' => 'public']);
+            $playlists = $em->getRepository('AppBundle:Playlist')->findBy([
+                'user' => $user
+            ]);
+        }
 
         return $this->render(':default:listen.html.twig', [
             'playlists' => $playlists
