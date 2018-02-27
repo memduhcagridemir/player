@@ -18,26 +18,26 @@
                         {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
 
                         <div class="form-group row">
-                            {% if form.email.vars.errors|length %}
+                            {% if form.name.vars.errors|length %}
                                 <div class="alert alert-danger col-sm-12" role="alert">
-                                    {{ form_errors(form.email) }}
+                                    {{ form_errors(form.name) }}
                                 </div>
                             {% endif %}
-                            <label class="col-sm-4 col-form-label">{{ form_label(form.email) }}</label>
+                            <label class="col-sm-4 col-form-label">{{ form_label(form.name) }}</label>
                             <div class="col-sm-8">
-                                {{ form_widget(form.email, {'attr': {'class': 'form-control'} }) }}
+                                {{ form_widget(form.name, {'attr': {'class': 'form-control'} }) }}
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            {% if form.username.vars.errors|length %}
+                            {% if form.bio.vars.errors|length %}
                                 <div class="alert alert-danger col-sm-12" role="alert">
-                                    {{ form_errors(form.username) }}
+                                    {{ form_errors(form.bio) }}
                                 </div>
                             {% endif %}
-                            <label class="col-sm-4 col-form-label">{{ form_label(form.username) }}</label>
+                            <label class="col-sm-4 col-form-label">{{ form_label(form.bio) }}</label>
                             <div class="col-sm-8">
-                                {{ form_widget(form.username, {'attr': {'class': 'form-control'} }) }}
+                                {{ form_widget(form.bio, {'attr': {'class': 'form-control'} }) }}
                             </div>
                         </div>
 
@@ -63,11 +63,11 @@
             </div>
         </div>
         <div class="card col-3 ml-auto">
-            <img class="card-img-top" src="/img/login-icon-3048.png" alt="Card image cap">
+            <img class="card-img-top" src="/img/listen_headphones.png" alt="Card image cap">
             <div class="card-body">
-                <h4 class="card-title">Already have an account?</h4>
-                <p class="card-text">Login to listen your favorite songs for free.</p>
-                <a href="{{ path('fos_user_security_login') }}" class="btn btn-outline-secondary btn-block">Login</a>
+                <h4 class="card-title">Start listening?</h4>
+                <p class="card-text">Go to listen page to start listening your favourite songs.</p>
+                <a href="{{ path('listen') }}" class="btn btn-outline-secondary btn-block">Listen</a>
             </div>
         </div>
     </div>

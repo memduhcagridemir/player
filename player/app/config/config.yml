@@ -80,6 +80,9 @@ fos_user:
     registration:
         form:
             type: AppBundle\Form\RegistrationFormType
+    profile:
+        form:
+            type: AppBundle\Form\ProfileFormType
 
 vich_uploader:
     db_driver: orm
