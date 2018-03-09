@@ -2,10 +2,7 @@
 
 /.env
 /.idea/
-/.data/
-!/.data/.gitkeep
-/logs/
-!/logs/.gitkeep
+/.docker/
 
 /player/vendor/
 /player/web/bundles/
