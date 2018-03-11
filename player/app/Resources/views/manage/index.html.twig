@@ -13,7 +13,7 @@
                     Playlists
                 </div>
                 <div class="card-body">
-                    <table class="table table-hover">
+                    <table id="playlists" class="table table-hover">
                         <thead>
                         <tr>
                             <td>Order</td>
@@ -51,7 +51,9 @@
                     Upload an Audio
                 </div>
                 <div class="card-body text-center">
-                    {{ render(controller('AppBundle\\Controller\\AudioController::newAction')) }}
+                    <div id="new-audio">
+                        {{ render(controller('AppBundle\\Controller\\AudioController::newAction')) }}
+                    </div>
                 </div>
             </div>
         </div>
