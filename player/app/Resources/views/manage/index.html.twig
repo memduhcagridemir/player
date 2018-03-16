@@ -39,7 +39,7 @@
                         </tbody>
                     </table>
                     <div class="col-12 text-right">
-                        <span data-toggle="popover" data-placement="left" data-original-title="New Playlist" data-html="true"
+                        <span data-toggle="popover" data-placement="left" data-original-title="New Playlist" data-html="true" id="new-playlist"
                               data-content='{{ render(controller('AppBundle\\Controller\\PlaylistController::newAction')) }}'>
                             Create <span class="oi oi-plus"></span>
                         </span>
@@ -74,7 +74,7 @@
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade" id="all" role="tabpanel" aria-labelledby="nav-home-tab">
                             <br/>
-                            <table class="table thead-light">
+                            <table class="table thead-light audio-list">
                                 <tr class="row">
                                     <th class="col-1">#</th>
                                     <th class="col-3">Name</th>

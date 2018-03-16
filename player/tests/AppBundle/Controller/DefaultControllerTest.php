@@ -13,8 +13,8 @@ class DefaultControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Should load successfully.");
-        $this->assertCount(1, $crawler->filter('#nav-register'), "Should include a link to register page.");
         $this->assertCount(1, $crawler->filter('#nav-login'), "Should include a link to login page.");
+        $this->assertCount(1, $crawler->filter('#nav-register'), "Should include a link to register page.");
     }
 
     public function testListen()

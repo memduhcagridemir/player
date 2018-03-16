@@ -8,9 +8,6 @@
 /player/web/bundles/
 
 /player/var/
-!/player/var/cache/.gitkeep
-!/player/var/logs/.gitkeep
-!/player/var/sessions/.gitkeep
 
 /player/uploads/*
 !/player/uploads/.gitkeep
