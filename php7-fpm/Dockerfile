@@ -7,6 +7,7 @@ MAINTAINER Maxence POUTORD <maxence.poutord@gmail.com>
 RUN apt-get update && apt-get install -y \
     openssl \
     git \
+    zlib1g-dev \
     unzip
 
 # Install Composer
@@ -19,8 +20,7 @@ RUN printf '[PHP]\ndate.timezone = "%s"\n', ${TIMEZONE} > /usr/local/etc/php/con
 RUN "date"
 
 # Type docker-php-ext-install to see available extensions
-RUN docker-php-ext-install pdo pdo_mysql
-
+RUN docker-php-ext-install pdo pdo_mysql zip
 
 # install xdebug
 RUN pecl install xdebug
