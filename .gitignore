@@ -2,18 +2,13 @@
 
 /.env
 /.idea/
-/.data/
-!/.data/.gitkeep
-/logs/
-!/logs/.gitkeep
+/.docker/
 
+/player/var/
 /player/vendor/
 /player/web/bundles/
 
-/player/var/
-!/player/var/cache/.gitkeep
-!/player/var/logs/.gitkeep
-!/player/var/sessions/.gitkeep
+/player/app/bootstrap.php.cache
 
 /player/uploads/*
 !/player/uploads/.gitkeep
