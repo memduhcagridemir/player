@@ -84,7 +84,7 @@
                                 </tr>
 
                                 {% for audio in user.audios %}
-                                    <tr class="row">
+                                    <tr class="row audio">
                                         <td class="col-1">{{ loop.index }}</td>
                                         <td class="col-3">{{ audio.name }}</td>
                                         <td class="col-1">{{ audio.length |sectotime}}</td>
