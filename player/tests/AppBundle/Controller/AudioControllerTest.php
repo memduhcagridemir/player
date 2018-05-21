@@ -13,38 +13,37 @@ class AudioControllerTest extends WebTestCase
     public function testNew()
     {
         $client = static::createClient();
-
         $this->logIn($client);
 
         $crawler = $client->request('GET', '/manage/');
-        $numberOfAudiosBefore = $crawler->filter('div#all tr.audio')->count();
+        $this->assertCount(0, $crawler->filter('div#all tr.audio'), "Number of audios should be 0 before upload.");
 
         $crawler = $client->request('GET', '/manage/audio/new');
-        $audio = new UploadedFile(
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "New audio form should be displayed.");
+
+        $form = $crawler->filter('form[name=appbundle_audio]')->form();
+        $form['appbundle_audio[audioFile]'] = new UploadedFile(
             './uploads/test.mp3',
             'test.mp3',
             'audio/mpeg',
             198658
         );
-
-        $form = $crawler->filter('form[name=appbundle_audio]')->form();
-        $form['appbundle_audio[audioFile]'] = $audio;
         $client->submit($form);
-
-        $this->assertEquals(302, $client->getResponse()->getStatusCode(), "Should redirect to manage index.");
+        $this->assertEquals(302, $client->getResponse()->getStatusCode(), "Successful upload should redirect to manage index.");
 
         $crawler = $client->request('GET', '/manage/');
-        $this->assertEquals($numberOfAudiosBefore + 1, $crawler->filter('div#all tr.audio')->count(), 'Number of audios should be 1 more after upload.');
+        $this->assertCount(1, $crawler->filter('div#all tr.audio'), "Number of audios should be 1 after upload.");
     }
 
     public function testEdit()
     {
         $client = static::createClient();
-
         $this->logIn($client);
 
         $crawler = $client->request('GET', '/manage/');
-        $this->assertEquals(1, $crawler->filter('div#all tr.audio')->count(), "# of audios should be 1")
+        $this->assertCount(1, $crawler->filter('div#all tr.audio'), "Number of audios should be 1 before edit.");
+
+        $crawler = $client->request('GET', '/manage/audio/69/edit');
 
         // TODO :: complete this function
 
@@ -53,20 +52,16 @@ class AudioControllerTest extends WebTestCase
     public function testDelete()
     {
         $client = static::createClient();
-
         $this->logIn($client);
 
         $crawler = $client->request('GET', '/manage/');
-        $numberOfAudiosBefore = $crawler->filter('div#all tr.audio')->count();
-
-        $this->assertGreaterThan(0, $numberOfAudiosBefore, 'Number of audios should be more than 0 before delete.');
+        $this->assertCount(1, $crawler->filter('div#all tr.audio'), "Number of audios should be 1 before delete.");
 
         $form = $crawler->filter('div#all tr.audio .delete-form')->form();
         $client->submit($form);
-
         $this->assertEquals(302, $client->getResponse()->getStatusCode(), "Should redirect to manage index.");
 
         $crawler = $client->request('GET', '/manage/');
-        $this->assertEquals($numberOfAudiosBefore - 1, $crawler->filter('div#all tr.audio')->count(), 'Number of audios should be 1 less after upload.');
+        $this->assertCount(0, $crawler->filter('div#all tr.audio'), "Number of audios should be 0 after deletion.");
     }
 }
