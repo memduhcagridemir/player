@@ -28,3 +28,13 @@ services:
         volumes:
             - ./.docker/logs/nginx/:/var/log/nginx
             - ./nginx/custom_nginx.conf:/etc/nginx/conf.d/custom_nginx.conf
+    elk:
+        image: willdurand/elk
+        ports:
+            - 81:80
+        volumes:
+            - ./elk/logstash:/etc/logstash
+            - ./elk/logstash/patterns:/opt/logstash/patterns
+        volumes_from:
+            - php
+            - nginx
