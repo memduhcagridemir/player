@@ -2,22 +2,34 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Audio;
 use AppBundle\Entity\Playlist;
-use AppBundle\Form\AudioType;
 use AppBundle\Form\PlaylistType;
+use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations as FOSRest;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * Audio controller.
  *
- * @Route("/manage/playlist")
+ * @Route("/api/playlist")
  */
-class PlaylistController extends Controller
+class PlaylistRestController extends FOSRestController
 {
+    /**
+     * @FOSRest\Get("/playlist")
+     */
+    public function listAction()
+    {
+        $restresult = $this->getDoctrine()->getRepository('AppBundle:Playlist')->findAll();
+        if ($restresult === null) {
+            return new View("there are no playlists exist", Response::HTTP_NOT_FOUND);
+        }
+        return $restresult;
+    }
+
     /**
      * Creates a new playlist entity.
      *
