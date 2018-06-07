@@ -112,3 +112,4 @@ fos_rest:
         view_response_listener: 'force'
         formats:
             json: true
+    disable_csrf_role: ROLE_API
