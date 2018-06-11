@@ -25,25 +25,12 @@ class PlaylistRestController extends FOSRestController
     /**
      * @FOSRest\Get("/", name="rest_playlist_list")
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $playlists = $this->getDoctrine()->getRepository('AppBundle:Playlist')->findAll();
-        if ($playlists === null) {
-            return new View("there are no playlists exist", Response::HTTP_NOT_FOUND);
-        }
-        return $playlists;
-    }
+        $limit = $request->get('limit') ?? 10;
+        $offset = $request->get('offset') ?? 0;
 
-    /**
-     * @FOSRest\Get("/{id}", name="rest_playlist_get")
-     */
-    public function getAction(int $id)
-    {
-        $playlist = $this->getDoctrine()->getRepository('AppBundle:Playlist')->findOneBy(["id" => $id]);
-        if ($playlist === null) {
-            return new View("there are no playlists exist", Response::HTTP_NOT_FOUND);
-        }
-        return $playlist;
+        return $this->getDoctrine()->getRepository('AppBundle:Playlist')->findBy([], null, $limit, $offset);
     }
 
     private function processForm(Playlist $playlist, array $data, $method = 'PUT') {
@@ -70,12 +57,12 @@ class PlaylistRestController extends FOSRestController
     }
 
     /**
-     * @FOSRest\Post("/", name="rest_playlist_new")
+     * @FOSRest\Post("/", name="rest_playlist_post")
      */
-    public function newAction(Request $request)
+    public function postAction(Request $request)
     {
         try {
-            $playlist = $this->processForm(new Playlist(), $request->request->all(), 'POST');
+            $playlist = $this->processForm(new Playlist(), $request->request->all(), $request->getMethod());
 
             $routeOptions = [ 'id' => $playlist->getId(), '_format' => $request->get('_format') ];
             return $this->routeRedirectView('rest_playlist_get', $routeOptions, Response::HTTP_CREATED);
@@ -86,55 +73,70 @@ class PlaylistRestController extends FOSRestController
     }
 
     /**
-     * Displays a form to edit an existing playlist entity.
-     *
-     * @Route("/{id}/edit", name="playlist_edit")
-     * @Method({"GET", "POST"})
+     * @FOSRest\Get("/{id}", name="rest_playlist_get")
      */
-    public function editAction(Request $request, Playlist $playlist)
+    public function getAction(int $id)
     {
-        $editForm = $this->createForm('AppBundle\Form\PlaylistType', $playlist);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('manage_index');
+        $playlist = $this->getDoctrine()->getRepository('AppBundle:Playlist')->findOneBy(["id" => $id]);
+        if ($playlist === null) {
+            return new View("there are no playlists exist", Response::HTTP_NOT_FOUND);
         }
+        return $playlist;
+    }
 
-        return $this->render(':playlist:edit.html.twig', array(
-            'playlist' => $playlist,
-            'form' => $editForm->createView()
-        ));
+    /**
+     * @FOSRest\Put("/{id}", name="rest_playlist_put")
+     */
+    public function putAction(Request $request)
+    {
+        try {
+            /** @var Playlist $playlist */
+            $playlist = $this->getDoctrine()->getRepository('AppBundle:Playlist')->findOneBy([ 'id' => $request->get('id') ]);
+            $playlist = $this->processForm($playlist, $request->request->all(), $request->getMethod());
+
+            $routeOptions = [ 'id' => $playlist->getId(), '_format' => $request->get('_format') ];
+            return $this->routeRedirectView('rest_playlist_get', $routeOptions, Response::HTTP_CREATED);
+        }
+        catch (InvalidFormException $exception) {
+            return $exception->getForm();
+        }
+    }
+
+    /**
+     * @FOSRest\Patch("/{id}", name="rest_playlist_patch")
+     */
+    public function patchAction(Request $request)
+    {
+        try {
+            /** @var Playlist $playlist */
+            $playlist = $this->getDoctrine()->getRepository('AppBundle:Playlist')->findOneBy([ 'id' => $request->get('id') ]);
+            $playlist = $this->processForm($playlist, $request->request->all(), $request->getMethod());
+
+            $routeOptions = [ 'id' => $playlist->getId(), '_format' => $request->get('_format') ];
+            return $this->routeRedirectView('rest_playlist_get', $routeOptions, Response::HTTP_CREATED);
+        }
+        catch (InvalidFormException $exception) {
+            return $exception->getForm();
+        }
     }
 
     /**
      * Deletes a playlist entity.
      *
-     * @Route("/{id}", name="playlist_delete")
-     * @Method({"GET", "DELETE"})
+     * @FOSRest\Delete("/{id}", name="rest_playlist_delete")
      */
-    public function deleteAction(Request $request, Playlist $playlist)
+    public function deleteAction(Request $request)
     {
-        $form = $this->createFormBuilder()
-            ->setAction($this->generateUrl('playlist_delete', array('id' => $playlist->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        $em = $this->getDoctrine()->getManager();
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($playlist);
-            $em->flush();
-
-            return $this->redirectToRoute('manage_index');
+        $playlist = $em->getRepository('AppBundle:Playlist')->findOneBy(["id" => $request->get('id')]);
+        if ($playlist === null) {
+            return new View("there are no playlists exist", Response::HTTP_NOT_FOUND);
         }
 
-        return $this->render(':playlist:delete.html.twig', [
-            'playlist' => $playlist,
-            'form' => $form->createView()
-        ]);
+        $playlist->remove();
+        $em->flush();
+
+        return new View("", Response::HTTP_OK);
     }
 }
